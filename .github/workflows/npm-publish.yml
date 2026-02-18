@@ -1,37 +1,100 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+# Release and publish workflow
+# Triggered on tag push (e.g., git tag v0.1.0 && git push --tags)
+# Builds the library, generates changelog, publishes to npm, and creates a GitHub Release
 
-name: Node.js Package
+name: Release & Publish
 
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
+  lint-commits:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - uses: actions/setup-node@v4
         with:
-          node-version: '24'
-      - run: npm ci
+          fetch-depth: 0
 
-  publish-npm:
-    needs: build
+      - name: Validate commit messages
+        run: |
+          # Validate all commit messages in the PR
+          COMMITS=$(git log --format="%s" origin/main..HEAD)
+          PATTERN="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .+"
+          
+          INVALID=0
+          echo "$COMMITS" | while read -r msg; do
+            if [ -z "$msg" ]; then
+              continue
+            fi
+            if ! echo "$msg" | grep -qE "$PATTERN"; then
+              echo "❌ Invalid commit: $msg"
+              INVALID=$((INVALID + 1))
+            fi
+          done
+          
+          if [ $INVALID -gt 0 ]; then
+            echo ""
+            echo "❌ Found $INVALID invalid commit message(s)."
+            echo "Please use Conventional Commits format: type(scope): message"
+            exit 1
+          else
+            echo "✓ All commit messages are valid"
+          fi
+
+  publish:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
-
     permissions:
-      id-token: write  # Required for OIDC
-      contents: read
-      
+      id-token: write  # Required for npm trusted publishers (OIDC)
+      contents: write  # Required for git push and creating releases
+
     steps:
       - uses: actions/checkout@v4
-      
+        with:
+          fetch-depth: 0  # Full history needed for changelog generation
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
           registry-url: https://registry.npmjs.org/
+
       - run: npm ci
-      - run: npm run publish:lib
+
+      - run: npm run build:lib
+
+      - name: Generate changelog
+        run: npx conventional-changelog -p angular -i CHANGELOG.md -s -r 0
+
+      - name: Commit changelog
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          git diff --cached --quiet || git commit -m "docs: update CHANGELOG.md [skip ci]"
+          git push origin HEAD:main
+
+      - name: Publish to npm
+        run: npm publish ./dist/dd-softlab-design-lib
+
+      - name: Create GitHub Release
+        run: |
+          TAG="${{ github.ref_name }}"
+          VERSION="${TAG#v}"
+          
+          # Extract changelog for this release from CHANGELOG.md
+          if [ -f CHANGELOG.md ]; then
+            CHANGELOG_NOTES=$(sed -n "/^## \[$VERSION\]/,/^## /p" CHANGELOG.md | sed '$ d' | sed '1d')
+          else
+            CHANGELOG_NOTES="Release $TAG"
+          fi
+          
+          gh release create "$TAG" --title "$TAG" --notes "$CHANGELOG_NOTES"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
