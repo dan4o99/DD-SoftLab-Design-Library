@@ -9,7 +9,7 @@
     "importHelpers": true
   },
   "angularCompilerOptions": {
-    "compilationMode": "full",
+    "compilationMode": "partial",
     "preserveWhitespaces": false,
     "enableResourceInlining": true
   }
