@@ -1,0 +1,33 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "dd-softlab-design-lib": {
+      "projectType": "library",
+      "root": "projects/dd-softlab-design-lib",
+      "sourceRoot": "projects/dd-softlab-design-lib/src",
+      "prefix": "dd",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/dd-softlab-design-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/dd-softlab-design-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/dd-softlab-design-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

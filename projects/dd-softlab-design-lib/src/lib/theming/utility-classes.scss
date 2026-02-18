@@ -1,0 +1,110 @@
+@use "./theme-tokens.generated" as ddTokens;
+
+$dd-spacing-scale: (
+  0: 0,
+  xs: ddTokens.toCssVar("space.xs"),
+  sm: ddTokens.toCssVar("space.sm"),
+  md: ddTokens.toCssVar("space.md"),
+  lg: ddTokens.toCssVar("space.lg"),
+);
+
+$dd-border-width-scale: (
+  0: 0,
+  1: 1px,
+  2: 2px,
+  4: 4px,
+);
+
+@each $name, $value in $dd-spacing-scale {
+  .dd-p-#{$name} {
+    padding: $value;
+  }
+
+  .dd-pt-#{$name} {
+    padding-top: $value;
+  }
+
+  .dd-pr-#{$name} {
+    padding-right: $value;
+  }
+
+  .dd-pb-#{$name} {
+    padding-bottom: $value;
+  }
+
+  .dd-pl-#{$name} {
+    padding-left: $value;
+  }
+
+  .dd-px-#{$name} {
+    padding-left: $value;
+    padding-right: $value;
+  }
+
+  .dd-py-#{$name} {
+    padding-top: $value;
+    padding-bottom: $value;
+  }
+
+  .dd-m-#{$name} {
+    margin: $value;
+  }
+
+  .dd-mt-#{$name} {
+    margin-top: $value;
+  }
+
+  .dd-mr-#{$name} {
+    margin-right: $value;
+  }
+
+  .dd-mb-#{$name} {
+    margin-bottom: $value;
+  }
+
+  .dd-ml-#{$name} {
+    margin-left: $value;
+  }
+
+  .dd-mx-#{$name} {
+    margin-left: $value;
+    margin-right: $value;
+  }
+
+  .dd-my-#{$name} {
+    margin-top: $value;
+    margin-bottom: $value;
+  }
+}
+
+@each $name, $value in $dd-border-width-scale {
+  .dd-bw-#{$name} {
+    border-width: $value;
+  }
+
+  .dd-bwt-#{$name} {
+    border-top-width: $value;
+  }
+
+  .dd-bwr-#{$name} {
+    border-right-width: $value;
+  }
+
+  .dd-bwb-#{$name} {
+    border-bottom-width: $value;
+  }
+
+  .dd-bwl-#{$name} {
+    border-left-width: $value;
+  }
+
+  .dd-bwx-#{$name} {
+    border-left-width: $value;
+    border-right-width: $value;
+  }
+
+  .dd-bwy-#{$name} {
+    border-top-width: $value;
+    border-bottom-width: $value;
+  }
+}
