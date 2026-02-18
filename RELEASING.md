@@ -7,13 +7,14 @@ This document describes the release process for the DD SoftLab Design Library.
 - You have push access to this repository
 - You have an npm account with publish access to the `@dd-softlab` scope
 - Node.js 24+ and npm are installed locally
-- All changes are committed and pushed to `main`
+- All changes are committed and pushed to `master`
 
 ## Release Process
 
 ### 1. Choose a Version Level
 
 Releases follow [Semantic Versioning](https://semver.org/):
+
 - **Patch** (0.0.X): Bug fixes and minor improvements
 - **Minor** (0.X.0): New features (backwards compatible)
 - **Major** (X.0.0): Breaking changes
@@ -55,6 +56,7 @@ type(scope): description
 ```
 
 **Types:**
+
 - `feat` – New feature
 - `fix` – Bug fix
 - `docs` – Documentation changes
@@ -68,6 +70,7 @@ type(scope): description
 - `revert` – Revert a previous commit
 
 **Examples:**
+
 ```
 feat(button): add icon support
 fix(tabs): resolve memory leak on destroy
@@ -80,7 +83,7 @@ chore: bump Angular to 21.1.0
 Push the commit and tag to trigger the automated release workflow:
 
 ```bash
-git push origin main
+git push origin master
 git push origin --tags
 ```
 
@@ -96,7 +99,7 @@ The GitHub Actions workflow will automatically:
 
 1. ✅ Build the library with `npm run build:lib`
 2. ✅ Generate `CHANGELOG.md` from commit messages using [Conventional Changelog](https://github.com/conventional-changelog/conventional-changelog)
-3. ✅ Commit the updated changelog back to `main` (with `[skip ci]` to prevent loops)
+3. ✅ Commit the updated changelog back to `master` (with `[skip ci]` to prevent loops)
 4. ✅ Publish to npm via trusted publishers (OIDC, no tokens needed)
 5. ✅ Create a GitHub Release with automated notes from the changelog
 

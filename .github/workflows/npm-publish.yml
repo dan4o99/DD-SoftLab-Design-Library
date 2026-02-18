@@ -24,7 +24,7 @@ jobs:
       - name: Validate commit messages
         run: |
           # Validate all commit messages in the PR
-          COMMITS=$(git log --format="%s" origin/main..HEAD)
+          COMMITS=$(git log --format="%s" origin/master..HEAD)
           PATTERN="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .+"
           
           INVALID=0
@@ -78,7 +78,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add CHANGELOG.md
           git diff --cached --quiet || git commit -m "docs: update CHANGELOG.md [skip ci]"
-          git push origin HEAD:main
+          git push origin HEAD:master
 
       - name: Publish to npm
         run: npm publish ./dist/dd-softlab-design-lib
