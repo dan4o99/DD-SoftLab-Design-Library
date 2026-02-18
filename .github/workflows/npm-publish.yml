@@ -33,5 +33,5 @@ jobs:
         with:
           node-version: '24'
           registry-url: https://registry.npmjs.org/
-      - run: npm config list
+      - run: npm ci
       - run: npm run publish:lib
