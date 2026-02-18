@@ -24,12 +24,12 @@ Releases are **fully automated** using [semantic-release](https://github.com/sem
 
 Semantic-release reads your commit messages and auto-increments the version:
 
-| Commit Type | Version Impact |
-|---|---|
-| `feat(scope): ...` | **Minor** bump (0.0.7 → 0.1.0) |
-| `fix(scope): ...` | **Patch** bump (0.0.7 → 0.0.8) |
-| `BREAKING CHANGE:` in body | **Major** bump (0.0.7 → 1.0.0) |
-| `chore:`, `docs:`, `style:`, etc. | No release, CHANGELOG updated |
+| Commit Type                       | Version Impact                 |
+| --------------------------------- | ------------------------------ |
+| `feat(scope): ...`                | **Minor** bump (0.0.7 → 0.1.0) |
+| `fix(scope): ...`                 | **Patch** bump (0.0.7 → 0.0.8) |
+| `BREAKING CHANGE:` in body        | **Major** bump (0.0.7 → 1.0.0) |
+| `chore:`, `docs:`, `style:`, etc. | No release, CHANGELOG updated  |
 
 ### Conventional Commits Format
 
@@ -41,6 +41,7 @@ type(scope): description
 ```
 
 **Types:**
+
 - `feat` – New feature (triggers minor)
 - `fix` – Bug fix (triggers patch)
 - `BREAKING CHANGE:` – Breaking change (triggers major)
@@ -55,6 +56,7 @@ type(scope): description
 - `revert` – Revert commit
 
 **Examples:**
+
 ```
 feat(button): add icon support
 → Triggers: minor version bump and publish
