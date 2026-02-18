@@ -18,15 +18,13 @@
     [
       "@semantic-release/npm",
       {
-        "pkgRoot": "dist/dd-softlab-design-lib",
-        "tarballDir": "dist"
+        "pkgRoot": "projects/dd-softlab-design-lib"
       }
     ],
     [
       "@semantic-release/git",
       {
         "assets": [
-          "package.json",
           "projects/dd-softlab-design-lib/package.json",
           "CHANGELOG.md"
         ],
