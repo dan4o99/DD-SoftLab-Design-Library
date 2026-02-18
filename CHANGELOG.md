@@ -1,3 +1,16 @@
+# [0.1.0](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.0.8...v0.1.0) (2026-02-18)
+
+
+### Bug Fixes
+
+* adjust npm audit to warning-only (high severity only) ([0021d1f](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/0021d1faf9c4fed998755720631e37612a37a7dc))
+* correct semantic-release config to publish from library package.json ([320bb0d](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/320bb0d345dd05ef924c093c67a806eb54b2005d))
+
+
+### Features
+
+* implement semantic-release for auto-versioning and quality gates ([6f56723](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/6f56723fee73b3bcaef0334470a904419c6bd421))
+
 # [](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.0.8...v) (2026-02-18)
 
 
@@ -17,6 +30,3 @@
 
 
 ## 0.0.6 (2026-02-18)
-
-
-
