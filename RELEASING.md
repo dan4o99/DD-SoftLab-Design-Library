@@ -1,52 +1,37 @@
 # Releasing `@dd-softlab/dd-softlab-design-lib`
 
-This document describes the release process for the DD SoftLab Design Library.
+This document describes the automated release process for the DD SoftLab Design Library.
+
+## Overview
+
+Releases are **fully automated** using [semantic-release](https://github.com/semantic-release/semantic-release):
+
+1. You push commits to `master` with conventional commit messages
+2. GitHub Actions automatically analyzes commits
+3. The workflow runs tests, linting, and security checks
+4. If checks pass, semantic-release auto-determines the version
+5. Publishes to npm, creates a GitHub Release, updates CHANGELOG.md
+6. All done — no manual tagging or version management needed
 
 ## Prerequisites
 
-- You have push access to this repository
-- You have an npm account with publish access to the `@dd-softlab` scope
-- Node.js 24+ and npm are installed locally
-- All changes are committed and pushed to `master`
+- All commits follow [Conventional Commits](https://www.conventionalcommits.org/) format
+- All changes are pushed to `master` (directly or via PR)
 
-## Release Process
+## How It Works
 
-### 1. Choose a Version Level
+### Version Bumping (Automatic)
 
-Releases follow [Semantic Versioning](https://semver.org/):
+Semantic-release reads your commit messages and auto-increments the version:
 
-- **Patch** (0.0.X): Bug fixes and minor improvements
-- **Minor** (0.X.0): New features (backwards compatible)
-- **Major** (X.0.0): Breaking changes
+| Commit Type | Version Impact |
+|---|---|
+| `feat(scope): ...` | **Minor** bump (0.0.7 → 0.1.0) |
+| `fix(scope): ...` | **Patch** bump (0.0.7 → 0.0.8) |
+| `BREAKING CHANGE:` in body | **Major** bump (0.0.7 → 1.0.0) |
+| `chore:`, `docs:`, `style:`, etc. | No release, CHANGELOG updated |
 
-### 2. Bump the Version
-
-Run one of these commands locally to update the library's `package.json` version:
-
-```bash
-# Patch release (0.0.7 → 0.0.8)
-npm run release:patch
-
-# Minor release (0.0.7 → 0.1.0)
-npm run release:minor
-
-# Major release (0.0.7 → 1.0.0)
-npm run release:major
-```
-
-### 3. Commit and Tag
-
-After bumping the version, create a commit and tag:
-
-```bash
-git add projects/dd-softlab-design-lib/package.json
-git commit -m "chore: release v0.0.8"
-git tag v0.0.8
-```
-
-**Important:** Commit messages must follow [Conventional Commits](https://www.conventionalcommits.org/) format.
-
-#### Conventional Commits Format
+### Conventional Commits Format
 
 ```
 type(scope): description
@@ -56,85 +41,106 @@ type(scope): description
 ```
 
 **Types:**
-
-- `feat` – New feature
-- `fix` – Bug fix
-- `docs` – Documentation changes
-- `style` – Code formatting (no logic change)
-- `refactor` – Code restructuring (no logic change)
-- `perf` – Performance improvements
-- `test` – Test-related changes
-- `build` – Build system changes
-- `ci` – CI/CD changes
-- `chore` – Maintenance, dependencies, etc.
-- `revert` – Revert a previous commit
+- `feat` – New feature (triggers minor)
+- `fix` – Bug fix (triggers patch)
+- `BREAKING CHANGE:` – Breaking change (triggers major)
+- `docs` – Documentation
+- `style` – Code formatting
+- `refactor` – Code restructuring
+- `perf` – Performance
+- `test` – Tests
+- `build` – Build system
+- `ci` – CI/CD
+- `chore` – Maintenance
+- `revert` – Revert commit
 
 **Examples:**
-
 ```
 feat(button): add icon support
-fix(tabs): resolve memory leak on destroy
-docs: update component API reference
-chore: bump Angular to 21.1.0
+→ Triggers: minor version bump and publish
+
+fix(tabs): resolve memory leak
+→ Triggers: patch version bump and publish
+
+chore: update dependencies
+→ No release (category doesn't trigger version bump)
+
+feat(input): add validation
+BREAKING CHANGE: removed deprecated props
+→ Triggers: major version bump and publish
 ```
 
-### 4. Push and Release
+## Release Process (Developer)
 
-Push the commit and tag to trigger the automated release workflow:
+### One-Time Setup
+
+Install dependencies:
 
 ```bash
+npm ci
+```
+
+The git hook activates automatically via the `prepare` script.
+
+### Making Changes
+
+```bash
+# Create a feature branch (optional)
+git checkout -b feature/my-feature
+
+# Make changes to components/styles
+
+# Commit with conventional format
+git commit -m "feat(button): add rounded variant"
+# or
+git commit -m "fix: resolve hover state on mobile"
+
+# Push to master (directly or via PR)
 git push origin master
-git push origin --tags
 ```
 
-Or combine them:
+### That's It
+
+Once your commit reaches `master`, the workflow automatically:
+
+1. ✅ Validates commit format
+2. ✅ Builds and tests the library
+3. ✅ Runs security audit
+4. ✅ Determines version bump (feat→minor, fix→patch, BREAKING→major)
+5. ✅ Updates `package.json` version
+6. ✅ Publishes to npm
+7. ✅ Commits version bump and CHANGELOG to master
+8. ✅ Creates GitHub Release with notes
+9. ✅ Tags the commit
+
+No manual versioning, no manual tagging — all automatic.
+
+## What Gets Updated Automatically
+
+- `package.json` (workspace root) version
+- `projects/dd-softlab-design-lib/package.json` version
+- `CHANGELOG.md` (with commit details)
+- GitHub Releases (with changelog notes)
+- npm registry (newly published package)
+
+## Quality Gates
+
+The workflow **blocks releases** if:
+
+- ❌ Build fails (`ng build` error)
+- ❌ Security vulnerabilities detected
+- ❌ Any commit doesn't follow Conventional Commits format
+
+To check locally:
 
 ```bash
-git push --follow-tags
+npm run build:lib    # Check build
+npm audit            # Check vulnerabilities
 ```
 
-### 5. Automated Workflow
+## Git Hook
 
-The GitHub Actions workflow will automatically:
-
-1. ✅ Build the library with `npm run build:lib`
-2. ✅ Generate `CHANGELOG.md` from commit messages using [Conventional Changelog](https://github.com/conventional-changelog/conventional-changelog)
-3. ✅ Commit the updated changelog back to `master` (with `[skip ci]` to prevent loops)
-4. ✅ Publish to npm via trusted publishers (OIDC, no tokens needed)
-5. ✅ Create a GitHub Release with automated notes from the changelog
-
-**Monitor the workflow** at: [Actions](https://github.com/dan4o99/DD-SoftLab-Design-Library/actions)
-
-### 6. Verify the Release
-
-After the workflow completes:
-
-```bash
-# Check npm registry
-npm view @dd-softlab/dd-softlab-design-lib version
-
-# Check GitHub Release
-https://github.com/dan4o99/DD-SoftLab-Design-Library/releases
-```
-
-## Local Testing (Optional)
-
-To test the release process locally without pushing:
-
-```bash
-# Build the library
-npm run build:lib
-
-# Pack it
-npm run pack:lib
-
-# Inspect the tarball
-tar -tzf projects/dd-softlab-design-lib/dd-softlab-design-lib-0.0.8.tgz | head -20
-```
-
-## Git Hooks
-
-A pre-commit hook validates that commit messages follow Conventional Commits format. If your message is invalid, the commit will be rejected:
+A pre-commit hook validates messages before commit:
 
 ```
 ❌ Commit message does not follow Conventional Commits format.
@@ -145,55 +151,56 @@ Valid formats:
   ...
 ```
 
-To bypass the hook (not recommended):
+Bypass (not recommended):
 
 ```bash
 git commit --no-verify
 ```
 
+## Triggering a Major Release
+
+If you only have `fix:` commits but need a major version bump:
+
+```
+fix(core): major internal refactor
+
+BREAKING CHANGE: Removed deprecated calculateTotal() method
+```
+
+The `BREAKING CHANGE:` footer triggers a major bump.
+
 ## Troubleshooting
 
-### "I made a mistake in my commit message"
+### "My commit didn't trigger a release"
 
-If the mistake is in the latest commit (not pushed yet), amend it:
+`chore:`, `docs:`, `style:`, etc. don't trigger releases (no version bump). Use `feat:` or `fix:` to release.
+
+### "I made a typo in a commit message"
+
+If not pushed yet:
 
 ```bash
 git commit --amend -m "feat(button): correct description"
 ```
 
-### "I pushed the wrong tag"
-
-Delete it locally and remotely:
+If already on master, create a new commit:
 
 ```bash
-git tag -d v0.0.8
-git push origin :refs/tags/v0.0.8
+git commit -m "fix: correct the typo from previous commit"
+# This will trigger a patch release
 ```
 
 ### "The workflow failed"
 
-Check the [Actions tab](https://github.com/dan4o99/DD-SoftLab-Design-Library/actions) for logs. Common issues:
+Check [Actions tab](https://github.com/dan4o99/DD-SoftLab-Design-Library/actions):
 
-- **npm publish failed** → Check npm credentials and scope access
-- **Changelog generation failed** → Ensure commits follow Conventional Commits format
-- **Git push failed** → Check branch protection rules and permissions
-
-### "I need to re-run the workflow"
-
-Delete the tag locally and remotely, then re-push:
-
-```bash
-git tag -d v0.0.8
-git push origin :refs/tags/v0.0.8
-
-# Fix issues, then:
-git tag v0.0.8
-git push origin --tags
-```
+- **Build failed** → Run `npm run build:lib` locally
+- **Audit failed** → Run `npm audit` to see issues
+- **Invalid commits** → Check commit message format
+- **Publish failed** → Check npm trusted publishers setup
 
 ## Resources
 
+- [Semantic Release](https://semantic-release.gitbook.io/)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Semantic Versioning](https://semver.org/)
-- [Angular's Commit Guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit)
-- [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)

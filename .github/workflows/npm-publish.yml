@@ -1,16 +1,16 @@
-# Release and publish workflow
-# Triggered on tag push (e.g., git tag v0.1.0 && git push --tags)
-# Builds the library, generates changelog, publishes to npm, and creates a GitHub Release
+# Release and publish workflow with auto-versioning and quality gates
+# Triggered on push to master
+# Runs tests, linting, security checks, then auto-publishes via semantic-release
 
 name: Release & Publish
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   lint-commits:
@@ -23,41 +23,51 @@ jobs:
 
       - name: Validate commit messages
         run: |
-          # Validate all commit messages in the PR
           COMMITS=$(git log --format="%s" origin/master..HEAD)
           PATTERN="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .+"
           
-          INVALID=0
+          echo "Validating commit messages..."
           echo "$COMMITS" | while read -r msg; do
             if [ -z "$msg" ]; then
               continue
             fi
             if ! echo "$msg" | grep -qE "$PATTERN"; then
-              echo "❌ Invalid commit: $msg"
-              INVALID=$((INVALID + 1))
+              echo "❌ Invalid: $msg"
+              exit 1
             fi
           done
-          
-          if [ $INVALID -gt 0 ]; then
-            echo ""
-            echo "❌ Found $INVALID invalid commit message(s)."
-            echo "Please use Conventional Commits format: type(scope): message"
-            exit 1
-          else
-            echo "✓ All commit messages are valid"
-          fi
+          echo "✓ All commits are valid"
 
-  publish:
-    if: github.event_name == 'push'
+  quality:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - run: npm ci
+
+      - name: Lint and build
+        run: npm run build:lib
+
+      - name: Security audit
+        run: npm audit --audit-level=moderate
+
+  release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: quality
     runs-on: ubuntu-latest
     permissions:
-      id-token: write  # Required for npm trusted publishers (OIDC)
-      contents: write  # Required for git push and creating releases
+      id-token: write
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full history needed for changelog generation
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-node@v4
@@ -67,34 +77,7 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run build:lib
-
-      - name: Generate changelog
-        run: npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 0
-
-      - name: Commit changelog
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add CHANGELOG.md
-          git diff --cached --quiet || git commit -m "docs: update CHANGELOG.md [skip ci]"
-          git push origin HEAD:master
-
-      - name: Publish to npm
-        run: npm publish ./dist/dd-softlab-design-lib
-
-      - name: Create GitHub Release
-        run: |
-          TAG="${{ github.ref_name }}"
-          VERSION="${TAG#v}"
-          
-          # Extract changelog for this release from CHANGELOG.md
-          if [ -f CHANGELOG.md ]; then
-            CHANGELOG_NOTES=$(sed -n "/^## \[$VERSION\]/,/^## /p" CHANGELOG.md | sed '$ d' | sed '1d')
-          else
-            CHANGELOG_NOTES="Release $TAG"
-          fi
-          
-          gh release create "$TAG" --title "$TAG" --notes "$CHANGELOG_NOTES"
+      - name: Release
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
