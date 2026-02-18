@@ -3,6 +3,10 @@
   "version": "0.0.6",
   "description": "DD Design Angular component library",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dan4o99/DD-SoftLab-Design-Library"
+  },
   "publishConfig": {
     "access": "public"
   },
