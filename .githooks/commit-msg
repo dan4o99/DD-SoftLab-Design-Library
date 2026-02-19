@@ -1,31 +1,3 @@
 #!/bin/sh
-# Validate commit message format (Conventional Commits)
-# Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
 
-commit_msg=$(cat "$1")
-
-# Pattern: type(optional-scope): message
-# Examples: feat(button): add icon support
-#           fix: resolve memory leak
-#           docs: update README
-pattern="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .{1,}"
-
-if ! echo "$commit_msg" | grep -qE "$pattern"; then
-  echo "❌ Commit message does not follow Conventional Commits format."
-  echo ""
-  echo "Valid formats:"
-  echo "  feat(scope): add new feature"
-  echo "  fix: resolve bug"
-  echo "  docs: update documentation"
-  echo "  style: format code"
-  echo "  refactor: restructure code"
-  echo "  perf: improve performance"
-  echo "  test: add or update tests"
-  echo "  build: update build files"
-  echo "  ci: update CI configuration"
-  echo "  chore: maintenance tasks"
-  echo "  revert: revert previous commit"
-  echo ""
-  echo "Your message: $commit_msg"
-  exit 1
-fi
+npx commitlint --config commitlint.config.cjs --edit "$1"

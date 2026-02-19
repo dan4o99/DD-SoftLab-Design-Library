@@ -23,19 +23,17 @@ npm run pack:lib
 
 ## Publish
 
-1. Authenticate to npm:
+Publishing is handled by GitHub Actions + semantic-release on push to `master`.
 
-   ```bash
-   npm login
-   ```
+Recommended local preflight before opening/merging a PR:
 
-2. Publish from root:
+```bash
+npm run build:lib
+npm run pack:lib
+npm pack --dry-run ./dist/dd-softlab-design-lib
+```
 
-   ```bash
-   npm run publish:lib
-   ```
-
-`publish:lib` automatically bumps the patch version in `projects/dd-softlab-design-lib/package.json`, then builds and publishes.
+The release workflow publishes from `dist/dd-softlab-design-lib` (built output), not from raw source files.
 
 ## Consume
 

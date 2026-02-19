@@ -8,9 +8,9 @@ Releases are **fully automated** using [semantic-release](https://github.com/sem
 
 1. You push commits to `master` with conventional commit messages
 2. GitHub Actions automatically analyzes commits
-3. The workflow runs tests, linting, and security checks
+3. The workflow validates commits, builds the library, runs optional lint/test, validates package contents, and runs an audit check
 4. If checks pass, semantic-release auto-determines the version
-5. Publishes to npm, creates a GitHub Release, updates CHANGELOG.md
+5. Publishes to npm from `dist/dd-softlab-design-lib`, creates a GitHub Release, updates CHANGELOG.md
 6. All done — no manual tagging or version management needed
 
 ## Prerequisites
@@ -82,7 +82,11 @@ Install dependencies:
 npm ci
 ```
 
-The git hook activates automatically via the `prepare` script.
+Optional (recommended) local commit hook setup:
+
+```bash
+git config core.hooksPath .githooks
+```
 
 ### Making Changes
 
@@ -106,43 +110,46 @@ git push origin master
 Once your commit reaches `master`, the workflow automatically:
 
 1. ✅ Validates commit format
-2. ✅ Builds and tests the library
-3. ✅ Runs security audit
-4. ✅ Determines version bump (feat→minor, fix→patch, BREAKING→major)
-5. ✅ Updates `package.json` version
-6. ✅ Publishes to npm
-7. ✅ Commits version bump and CHANGELOG to master
-8. ✅ Creates GitHub Release with notes
-9. ✅ Tags the commit
+2. ✅ Builds the library
+3. ✅ Runs lint and test scripts (if present)
+4. ✅ Validates publishable package contents (`npm pack --dry-run`)
+5. ✅ Runs security audit (warning-only)
+6. ✅ Determines version bump (feat→minor, fix→patch, BREAKING→major)
+7. ✅ Updates CHANGELOG
+8. ✅ Publishes to npm from `dist/dd-softlab-design-lib`
+9. ✅ Creates GitHub Release with notes
+10. ✅ Tags the commit
 
 No manual versioning, no manual tagging — all automatic.
 
 ## What Gets Updated Automatically
 
-- `package.json` (workspace root) version
-- `projects/dd-softlab-design-lib/package.json` version
 - `CHANGELOG.md` (with commit details)
 - GitHub Releases (with changelog notes)
-- npm registry (newly published package)
+- npm registry (new package published from `dist/dd-softlab-design-lib`)
 
 ## Quality Gates
 
 The workflow **blocks releases** if:
 
 - ❌ Build fails (`ng build` error)
-- ❌ Security vulnerabilities detected
+- ❌ Optional lint/test scripts fail (when present)
+- ❌ Package dry-run fails
 - ❌ Any commit doesn't follow Conventional Commits format
 
 To check locally:
 
 ```bash
 npm run build:lib    # Check build
-npm audit            # Check vulnerabilities
+npm run lint         # If a lint script exists
+npm run test         # If a test script exists
+npm pack --dry-run ./dist/dd-softlab-design-lib
+npm audit            # Security visibility (CI keeps this warning-only)
 ```
 
 ## Git Hook
 
-A pre-commit hook validates messages before commit:
+A commit-msg hook validates messages before commit:
 
 ```
 ❌ Commit message does not follow Conventional Commits format.
@@ -197,7 +204,9 @@ git commit -m "fix: correct the typo from previous commit"
 Check [Actions tab](https://github.com/dan4o99/DD-SoftLab-Design-Library/actions):
 
 - **Build failed** → Run `npm run build:lib` locally
-- **Audit failed** → Run `npm audit` to see issues
+- **Lint/Test failed** → Run `npm run lint` / `npm run test` locally if scripts exist
+- **Pack dry-run failed** → Run `npm pack --dry-run ./dist/dd-softlab-design-lib`
+- **Audit warnings** → Run `npm audit` to inspect findings
 - **Invalid commits** → Check commit message format
 - **Publish failed** → Check npm trusted publishers setup
 

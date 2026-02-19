@@ -1,8 +1,11 @@
-# Release and publish workflow with auto-versioning and quality gates
-# Triggered on push to master
-# Runs tests, linting, security checks, then auto-publishes via semantic-release
+# Release and publish workflow with semantic-release
+# Triggered on pull requests and pushes to master
 
 name: Release & Publish
+
+concurrency:
+  group: release-publish-${{ github.ref }}
+  cancel-in-progress: true
 
 on:
   push:
@@ -14,44 +17,60 @@ on:
 
 jobs:
   lint-commits:
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Validate commit messages
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Validate commit messages with commitlint
         run: |
-          COMMITS=$(git log --format="%s" origin/master..HEAD)
-          PATTERN="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .+"
-          
-          echo "Validating commit messages..."
-          echo "$COMMITS" | while read -r msg; do
-            if [ -z "$msg" ]; then
-              continue
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git fetch origin ${{ github.base_ref }} --depth=1
+            FROM=$(git merge-base HEAD origin/${{ github.base_ref }})
+            TO=HEAD
+          else
+            FROM=${{ github.event.before }}
+            TO=${{ github.sha }}
+            if [ "$FROM" = "0000000000000000000000000000000000000000" ]; then
+              FROM=$(git rev-list --max-parents=0 HEAD)
             fi
-            if ! echo "$msg" | grep -qE "$PATTERN"; then
-              echo "❌ Invalid: $msg"
-              exit 1
-            fi
-          done
-          echo "✓ All commits are valid"
+          fi
+
+          echo "Linting commit range: $FROM..$TO"
+          npx commitlint --config commitlint.config.cjs --from "$FROM" --to "$TO" --verbose
 
   quality:
-    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    needs: lint-commits
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: '22'
+          cache: npm
 
       - run: npm ci
 
-      - name: Lint and build
+      - name: Build library
         run: npm run build:lib
+
+      - name: Lint (if script exists)
+        run: npm run lint --if-present
+
+      - name: Test (if script exists)
+        run: npm run test --if-present
+
+      - name: Validate package contents
+        run: npm pack --dry-run ./dist/dd-softlab-design-lib
 
       - name: Security audit (warnings only)
         run: npm audit --audit-level=high || true
@@ -60,6 +79,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     needs: quality
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       id-token: write
       contents: write
@@ -72,7 +92,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: '22'
+          cache: npm
 
       - run: npm ci
 
