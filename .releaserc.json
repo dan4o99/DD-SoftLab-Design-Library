@@ -10,12 +10,6 @@
       }
     ],
     [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "npm run build:lib"
-      }
-    ],
-    [
       "@semantic-release/npm",
       {
         "pkgRoot": "dist/dd-softlab-design-lib"
