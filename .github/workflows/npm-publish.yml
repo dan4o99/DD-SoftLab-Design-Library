@@ -72,6 +72,11 @@ jobs:
       - name: Validate package contents
         run: npm pack --dry-run ./dist/dd-softlab-design-lib
 
+      - name: Validate npm publish (dry-run)
+        run: |
+          cd ./dist/dd-softlab-design-lib
+          npm publish --dry-run
+
       - name: Security audit (warnings only)
         run: npm audit --audit-level=high || true
 
