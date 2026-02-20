@@ -37,7 +37,6 @@ Create PR → Validate commits & quality → Merge to master → Automated relea
    - Status checks must pass before merge is allowed
 
 2. **Merge to Master**: After PR approval and passing all checks:
-   - Only PRs can be merged (direct commits to master are blocked)
    - Merge runs final validation, then triggers automatic release
 
 3. **Automatic Release** (after merge):
@@ -93,18 +92,6 @@ BREAKING CHANGE: <breaking change description>
 **Other types** (docs, style, refactor, perf, test, build, ci, chore): No release
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed commit message guidelines.
-
-### Branch Protection
-
-The `master` branch requires:
-
-- ✅ Minimum 1 PR approval before merge
-- ✅ All status checks passing
-- ✅ Branch up to date with master
-- ❌ No direct commits (PRs only)
-- ❌ No force pushes
-
-For details, see [.github/branch-protection.json](.github/branch-protection.json).
 
 ### Contributing
 

@@ -8,7 +8,6 @@ Thank you for your interest in contributing to the DD Softlab Design Library! Th
 - [Commit Message Guidelines](#commit-message-guidelines)
 - [Pull Request Workflow](#pull-request-workflow)
 - [Release Process](#release-process)
-- [Branch Protection Rules](#branch-protection-rules)
 
 ## Development Setup
 
@@ -159,7 +158,7 @@ All checks must pass before the PR can be merged.
 
 ### Review & Merge
 
-- ✅ At least 1 approval is required (enforced by branch protection)
+- ✅ At least 1 approval is required
 - ✅ All status checks must pass
 - ✅ Branch must be up to date with master
 - ✅ Use "Squash and merge" or "Create a merge commit" (based on your preference)
@@ -186,7 +185,6 @@ Create PR → Validate commits & quality → Merge to master → Semantic-releas
 2. **Manual Merge** (by reviewer):
    - Reviewer approves PR
    - Merge to `master` branch
-   - Branch protection rules ensure only PRs with passing checks are mergeable
 
 3. **Automatic Release** (after merge to master):
    - GitHub Actions `release` job runs
@@ -223,30 +221,6 @@ Commits merged:
 
 New version: 1.3.0
 ```
-
-## Branch Protection Rules
-
-The `master` branch is protected to ensure quality and require proper PR review:
-
-### Active Rules
-
-- ✅ Require a minimum of 1 pull request review before merging
-- ✅ Require status checks to pass:
-  - `lint-commits`: Validates commit message format
-  - `quality`: Runs build, test, lint, package validation, and security audit
-- ✅ Require branches to be up to date with master before merging
-- ✅ Dismiss stale pull request reviews when new commits are pushed
-- ✅ Enforce all rules for administrators
-- ❌ Force pushes are disabled
-- ❌ Deletion of the master branch is disabled
-
-### Implications
-
-- **No direct commits**: All changes must go through PRs
-- **No force pushes**: History is immutable
-- **No work-in-progress merges**: Rigorous validation before merge
-
-For details on configuring these rules in GitHub, see [`.github/branch-protection.json`](.github/branch-protection.json).
 
 ## Troubleshooting
 
