@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.1...v0.1.2) (2026-02-20)
+
+
+### Bug Fixes
+
+* **increase-version:** publish ([bbc0f8c](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/bbc0f8cc75626556605a307083484d13100da028))
+
 ## [0.1.1](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.0...v0.1.1) (2026-02-20)
 
 
