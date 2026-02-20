@@ -1,3 +1,11 @@
+## [0.1.3](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.2...v0.1.3) (2026-02-20)
+
+
+### Bug Fixes
+
+* **test:** add random comment to test PRs ([9599838](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/9599838ff983b6b32362d8e1225d36e11afdd0e8))
+* **test:** add random comment to test PRs 2 ([efc6e4f](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/efc6e4fe17cd4a2c55be000319cdefd8d385b61b))
+
 ## [0.1.2](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.1...v0.1.2) (2026-02-20)
 
 
