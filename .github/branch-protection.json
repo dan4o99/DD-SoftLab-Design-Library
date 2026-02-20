@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "description": "Master branch protection rules configuration",
+  "branches": {
+    "master": {
+      "enforce_admins": true,
+      "require_status_checks": {
+        "strict": true,
+        "checks": ["lint-commits", "quality"]
+      },
+      "require_pull_request_reviews": {
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": false,
+        "required_approving_review_count": 1
+      },
+      "require_branches_to_be_up_to_date_before_merging": true,
+      "allow_force_pushes": false,
+      "allow_deletions": false,
+      "required_status_checks_context": ["lint-commits", "quality"],
+      "block_creations": true,
+      "restrictions": {
+        "users": [],
+        "teams": [],
+        "apps": []
+      }
+    }
+  },
+  "notes": [
+    "enforce_admins: Admin users must follow the branch protection rules.",
+    "require_status_checks: Require status checks to pass before merging. 'strict' requires branches to be up to date.",
+    "required_approving_review_count: Minimum 1 approval required before merging to master.",
+    "dismiss_stale_reviews: Dismiss stale pull request approvals when new commits are pushed.",
+    "require_branches_to_be_up_to_date_before_merging: Ensure branches are up to date with master before merging.",
+    "allow_force_pushes: Disable force pushes to prevent accidental history rewrites.",
+    "allow_deletions: Disable deletion of master branch.",
+    "block_creations: Block creation of branches with matching names (master in this case).",
+    "To apply these rules via GitHub UI:",
+    "1. Go to Settings → Branches",
+    "2. Select 'Add rule' under 'Branch protection rules'",
+    "3. Enter 'master' as the branch name",
+    "4. Configure each setting according to this file",
+    "5. Save the rule",
+    "For programmatic application, use GitHub API v3 or GitHub CLI."
+  ]
+}
