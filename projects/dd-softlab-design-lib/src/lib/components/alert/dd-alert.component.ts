@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { DdDynamicStyleService } from "../../theming/dynamic-style.service";
 import { DD_ALERT_CSS, DdAlertVariant } from "./dd-alert.style";
-
+//comment to remove
 @Component({
   selector: "dd-alert",
   changeDetection: ChangeDetectionStrategy.OnPush,
