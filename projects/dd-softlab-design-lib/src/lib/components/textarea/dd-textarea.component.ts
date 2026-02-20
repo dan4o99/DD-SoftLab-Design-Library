@@ -39,7 +39,7 @@ export class DdTextareaComponent {
   readonly name = input<string>("");
   readonly id = input<string>("");
   readonly ariaLabel = input<string>("");
-  readonly rows = input<number>(4);
+  rows = input<number>(4);
   readonly required = input(false, { transform: booleanAttribute });
   readonly readonly = input(false, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });

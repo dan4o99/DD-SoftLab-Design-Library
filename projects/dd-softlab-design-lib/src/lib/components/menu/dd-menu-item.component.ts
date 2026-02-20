@@ -20,8 +20,8 @@ import { DD_MENU_ITEM_CSS } from "./dd-menu-item.style";
     <a
       [class]="menuItemClass()"
       [attr.style]="menuItemStyle()"
-      [attr.href]="href()"
-      [attr.target]="target()"
+      [href]="href()"
+      [target]="target()"
       [attr.rel]="rel()"
       [routerLink]="routerLink()"
       [routerLinkActive]="routerLinkActiveClass()"

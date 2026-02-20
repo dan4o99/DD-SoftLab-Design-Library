@@ -1,77 +1,79 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
+import { TestBed } from "@angular/core/testing";
 import { DdAlertComponent } from "./dd-alert.component";
-import { setupComponent } from "../../testing/test-helpers";
 
 describe("DdAlertComponent", () => {
-  it("should create", async () => {
-    const { component } = await setupComponent(DdAlertComponent);
-    expect(component).toBeTruthy();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DdAlertComponent],
+    }).compileComponents();
   });
 
-  it("should apply default variant class (info)", async () => {
-    const { fixture, element } = await setupComponent(DdAlertComponent);
+  it("creates component", () => {
+    const fixture = TestBed.createComponent(DdAlertComponent);
     fixture.detectChanges();
 
-    const div = element.querySelector("div")!;
-    expect(div.className).toContain("dd-alert");
-    // info variant has no extra class modifier
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it("should apply success variant class", async () => {
-    const { fixture, element } = await setupComponent(DdAlertComponent);
+  it("renders with default variant class", () => {
+    const fixture = TestBed.createComponent(DdAlertComponent);
+    fixture.detectChanges();
+
+    const div = fixture.nativeElement.querySelector("div");
+    expect(div?.className).toContain("dd-alert");
+  });
+
+  it("renders with default role attribute", () => {
+    const fixture = TestBed.createComponent(DdAlertComponent);
+    fixture.detectChanges();
+
+    const div = fixture.nativeElement.querySelector("div");
+    expect(div?.getAttribute("role")).toBe("status");
+  });
+
+  it("applies success variant class", () => {
+    const fixture = TestBed.createComponent(DdAlertComponent);
     fixture.componentRef.setInput("variant", "success");
     fixture.detectChanges();
 
-    const div = element.querySelector("div")!;
-    expect(div.className).toContain("dd-alert--success");
+    const div = fixture.nativeElement.querySelector("div");
+    expect(div?.className).toContain("dd-alert--success");
   });
 
-  it("should apply warning variant class", async () => {
-    const { fixture, element } = await setupComponent(DdAlertComponent);
+  it("applies warning variant class", () => {
+    const fixture = TestBed.createComponent(DdAlertComponent);
     fixture.componentRef.setInput("variant", "warning");
     fixture.detectChanges();
 
-    const div = element.querySelector("div")!;
-    expect(div.className).toContain("dd-alert--warning");
+    const div = fixture.nativeElement.querySelector("div");
+    expect(div?.className).toContain("dd-alert--warning");
   });
 
-  it("should apply danger variant class", async () => {
-    const { fixture, element } = await setupComponent(DdAlertComponent);
+  it("applies danger variant class", () => {
+    const fixture = TestBed.createComponent(DdAlertComponent);
     fixture.componentRef.setInput("variant", "danger");
     fixture.detectChanges();
 
-    const div = element.querySelector("div")!;
-    expect(div.className).toContain("dd-alert--danger");
+    const div = fixture.nativeElement.querySelector("div");
+    expect(div?.className).toContain("dd-alert--danger");
   });
 
-  it("should apply default role attribute (status)", async () => {
-    const { fixture, element } = await setupComponent(DdAlertComponent);
-    fixture.detectChanges();
-
-    const div = element.querySelector("div")!;
-    expect(div.getAttribute("role")).toBe("status");
-  });
-
-  it("should apply custom role attribute", async () => {
-    const { fixture, element } = await setupComponent(DdAlertComponent);
+  it("applies custom role attribute", () => {
+    const fixture = TestBed.createComponent(DdAlertComponent);
     fixture.componentRef.setInput("role", "alert");
     fixture.detectChanges();
 
-    const div = element.querySelector("div")!;
-    expect(div.getAttribute("role")).toBe("alert");
+    const div = fixture.nativeElement.querySelector("div");
+    expect(div?.getAttribute("role")).toBe("alert");
   });
 
-  it("should apply customClass", async () => {
-    const { fixture, element } = await setupComponent(DdAlertComponent);
+  it("applies customClass", () => {
+    const fixture = TestBed.createComponent(DdAlertComponent);
     fixture.componentRef.setInput("customClass", "custom-alert");
     fixture.detectChanges();
 
-    const div = element.querySelector("div")!;
-    expect(div.className).toContain("custom-alert");
-  });
-
-  it("should render content", async () => {
-    const { element } = await setupComponent(DdAlertComponent);
-    expect(element.querySelector("div")).toBeTruthy();
+    const div = fixture.nativeElement.querySelector("div");
+    expect(div?.className).toContain("custom-alert");
   });
 });

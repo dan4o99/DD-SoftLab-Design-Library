@@ -10,7 +10,6 @@
   },
   "angularCompilerOptions": {
     "compilationMode": "partial",
-    "preserveWhitespaces": false,
-    "enableResourceInlining": true
+    "preserveWhitespaces": false
   }
 }

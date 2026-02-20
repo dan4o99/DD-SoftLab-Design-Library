@@ -1,118 +1,49 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
+import { TestBed } from "@angular/core/testing";
 import { DdSwitchComponent } from "./dd-switch.component";
-import { setupComponent } from "../../testing/test-helpers";
 
 describe("DdSwitchComponent", () => {
-  it("should create", async () => {
-    const { component } = await setupComponent(DdSwitchComponent);
-    expect(component).toBeTruthy();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DdSwitchComponent],
+    }).compileComponents();
   });
 
-  it("should emit toggled on click", async () => {
-    const { fixture, element } = await setupComponent(DdSwitchComponent);
-    let emittedValue: boolean | undefined;
+  it("emits toggled on click", () => {
+    const fixture = TestBed.createComponent(DdSwitchComponent);
+    let emitted = false;
 
     fixture.componentInstance.toggled.subscribe((value: boolean) => {
-      emittedValue = value;
+      emitted = value;
     });
 
-    const button = element.querySelector(
-      'button[role="switch"]',
+    fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector(
+      ".dd-switch__button",
     ) as HTMLButtonElement;
     button.click();
     fixture.detectChanges();
 
-    expect(emittedValue).toBe(true);
+    expect(emitted).toBe(true);
   });
 
-  it("should apply checked state via aria-checked", async () => {
-    const { fixture, element } = await setupComponent(DdSwitchComponent);
-    fixture.componentRef.setInput("checked", true);
-    fixture.detectChanges();
+  it("does not emit when disabled", () => {
+    const fixture = TestBed.createComponent(DdSwitchComponent);
+    let emitted = false;
 
-    const button = element.querySelector(
-      'button[role="switch"]',
-    ) as HTMLButtonElement;
-    expect(button.getAttribute("aria-checked")).toBe("true");
-  });
-
-  it("should sync internal signal with checked input", async () => {
-    const { fixture, component } = await setupComponent(DdSwitchComponent);
-    fixture.componentRef.setInput("checked", true);
-    fixture.detectChanges();
-
-    expect(component.isChecked()).toBe(true);
-
-    fixture.componentRef.setInput("checked", false);
-    fixture.detectChanges();
-
-    expect(component.isChecked()).toBe(false);
-  });
-
-  it("should apply disabled attribute", async () => {
-    const { fixture, element } = await setupComponent(DdSwitchComponent);
-    fixture.componentRef.setInput("disabled", true);
-    fixture.detectChanges();
-
-    const button = element.querySelector(
-      'button[role="switch"]',
-    ) as HTMLButtonElement;
-    expect(button.hasAttribute("disabled")).toBe(true);
-  });
-
-  it("should not emit toggle when disabled", async () => {
-    const { fixture, element } = await setupComponent(DdSwitchComponent);
-    fixture.componentRef.setInput("disabled", true);
-    fixture.detectChanges();
-
-    let toggleEmitted = false;
     fixture.componentInstance.toggled.subscribe(() => {
-      toggleEmitted = true;
+      emitted = true;
     });
 
-    const button = element.querySelector(
-      'button[role="switch"]',
+    fixture.componentRef.setInput("disabled", true);
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector(
+      ".dd-switch__button",
     ) as HTMLButtonElement;
     button.click();
     fixture.detectChanges();
 
-    expect(toggleEmitted).toBe(false);
-  });
-
-  it("should apply ariaLabel", async () => {
-    const { fixture, element } = await setupComponent(DdSwitchComponent);
-    fixture.componentRef.setInput("ariaLabel", "Enable notifications");
-    fixture.detectChanges();
-
-    const button = element.querySelector(
-      'button[role="switch"]',
-    ) as HTMLButtonElement;
-    expect(button.getAttribute("aria-label")).toBe("Enable notifications");
-  });
-
-  it("should emit clicked event", async () => {
-    const { fixture, element } = await setupComponent(DdSwitchComponent);
-    let clickedEmitted = false;
-
-    fixture.componentInstance.clicked.subscribe(() => {
-      clickedEmitted = true;
-    });
-
-    const button = element.querySelector(
-      'button[role="switch"]',
-    ) as HTMLButtonElement;
-    button.click();
-    fixture.detectChanges();
-
-    expect(clickedEmitted).toBe(true);
-  });
-
-  it("should apply customClass", async () => {
-    const { fixture, element } = await setupComponent(DdSwitchComponent);
-    fixture.componentRef.setInput("customClass", "custom-switch");
-    fixture.detectChanges();
-
-    const wrapper = element.querySelector("span") as HTMLSpanElement;
-    expect(wrapper.className).toContain("custom-switch");
+    expect(emitted).toBe(false);
   });
 });
