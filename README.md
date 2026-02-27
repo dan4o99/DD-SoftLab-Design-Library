@@ -32,28 +32,27 @@ Create PR → Validate commits & quality → Merge to master → Automated relea
 ```
 
 1. **Pull Request Creation**: When you push to a feature branch and open a PR against master:
-   - Commit message validation (Conventional Commits format)
-   - Full quality gate checks (build, lint, test, npm pack, npm publish dry-run, security audit)
-   - Status checks must pass before merge is allowed
+
+- Full quality gate checks (build, lint, npm pack, npm publish dry-run, security audit)
+- Status checks must pass before merge is allowed
 
 2. **Merge to Master**: After PR approval and passing all checks:
    - Merge runs final validation, then triggers automatic release
 
 3. **Automatic Release** (after merge):
    - Semantic-release analyzes commits since last release
-   - Determines version bump (MAJOR.MINOR.PATCH) based on Conventional Commits
-   - Updates CHANGELOG.md with release notes
-   - Creates git tag with new version
-   - Publishes to npm registry
+
+- Determines version bump (MAJOR.MINOR.PATCH) from commit history
+- Updates CHANGELOG.md with release notes
+- Creates git tag with new version
+- Publishes to npm registry
 
 ### Quality Gates
 
 Every PR runs the following checks before merge is allowed:
 
-- ✅ **Commit Message Validation**: All commits must follow Conventional Commits format
 - ✅ **Build**: Compiles the library (TypeScript strict mode)
 - ✅ **Lint**: Code linting (if configured)
-- ✅ **Test**: Runs full test suite (Vitest)
 - ✅ **Package Validation**: Validates npm package contents and integrity
 - ✅ **npm Publish Dry-Run**: Validates npm publish would succeed without errors
 - ✅ **Security Audit**: Checks for vulnerable dependencies (warnings-only)
@@ -66,36 +65,13 @@ Before opening a PR, verify locally:
 
 ```bash
 npm run build:lib
-npm run test --if-present
 npm run pack:lib
 npm pack --dry-run ./dist/dd-softlab-design-lib
 ```
 
-### Commit Message Format
-
-This project enforces [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
-<type>(<scope>): <subject>
-
-<body>
-
-BREAKING CHANGE: <breaking change description>
-```
-
-**Commit types that trigger releases:**
-
-- `feat:` → MINOR version bump (new feature)
-- `fix:` → PATCH version bump (bug fix)
-- `BREAKING CHANGE:` footer → MAJOR version bump
-
-**Other types** (docs, style, refactor, perf, test, build, ci, chore): No release
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed commit message guidelines.
-
 ### Contributing
 
-For detailed setup, development workflow, commit guidelines, and troubleshooting, see [CONTRIBUTING.md](CONTRIBUTING.md).
+For detailed setup, development workflow, and troubleshooting, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Consume
 
