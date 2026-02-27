@@ -1,3 +1,10 @@
+## [0.1.5](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.4...v0.1.5) (2026-02-27)
+
+
+### Bug Fixes
+
+* **dependencies:** peer dependencies should work for Angular v>21 ([d03f750](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/d03f750a8021d87e52722a590a72b427a0290c35))
+
 ## [0.1.4](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.3...v0.1.4) (2026-02-27)
 
 
