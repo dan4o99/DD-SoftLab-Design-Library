@@ -1,3 +1,10 @@
+## [0.1.6](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.5...v0.1.6) (2026-02-27)
+
+
+### Bug Fixes
+
+* **forms:** use form controls ([5c8c821](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/5c8c82141de5755ab8129785101365a45068d9c1))
+
 ## [0.1.5](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.4...v0.1.5) (2026-02-27)
 
 
