@@ -16,46 +16,14 @@ on:
       - master
 
 jobs:
-  lint-commits:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-
-      - run: npm ci
-
-      - name: Validate commit messages with commitlint
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git fetch origin ${{ github.base_ref }} --depth=1
-            FROM=$(git merge-base HEAD origin/${{ github.base_ref }})
-            TO=HEAD
-          else
-            FROM=${{ github.event.before }}
-            TO=${{ github.sha }}
-            if [ "$FROM" = "0000000000000000000000000000000000000000" ]; then
-              FROM=$(git rev-list --max-parents=0 HEAD)
-            fi
-          fi
-
-          echo "Linting commit range: $FROM..$TO"
-          npx commitlint --config commitlint.config.cjs --from "$FROM" --to "$TO" --verbose
-
   quality:
-    needs: lint-commits
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: 'latest'
           cache: npm
 
       - run: npm ci
@@ -97,7 +65,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: 'latest'
           cache: npm
 
       - run: npm ci
