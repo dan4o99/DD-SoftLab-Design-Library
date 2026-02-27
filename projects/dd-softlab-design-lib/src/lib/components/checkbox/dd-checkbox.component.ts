@@ -5,8 +5,9 @@ import {
   computed,
   inject,
   input,
-  output,
+  model,
 } from "@angular/core";
+import { FormCheckboxControl } from "@angular/forms/signals";
 import { DdDynamicStyleService } from "../../theming/dynamic-style.service";
 import { DD_CHECKBOX_CSS } from "./dd-checkbox.style";
 
@@ -24,16 +25,15 @@ import { DD_CHECKBOX_CSS } from "./dd-checkbox.style";
         [attr.id]="id()"
         [attr.aria-label]="ariaLabel()"
         (change)="onChange($event)"
-        (click)="onClick($event)"
       />
       <span><ng-content /></span>
     </label>
   `,
 })
-export class DdCheckboxComponent {
+export class DdCheckboxComponent implements FormCheckboxControl {
   private readonly dynamicStyle: DdDynamicStyleService;
 
-  readonly checked = input(false, { transform: booleanAttribute });
+  readonly checked = model(false);
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly required = input(false, { transform: booleanAttribute });
   readonly name = input<string>("");
@@ -43,10 +43,6 @@ export class DdCheckboxComponent {
   readonly customStyle = input<string | Record<string, string | number> | null>(
     null,
   );
-
-  readonly checkedChange = output<boolean>();
-  readonly clicked = output<MouseEvent>();
-
   readonly checkboxClass = computed(() => {
     const disabledClass = this.disabled() ? "dd-checkbox--disabled" : "";
     return ["dd-checkbox", disabledClass, ...this.normalizedCustomClass()]
@@ -65,15 +61,8 @@ export class DdCheckboxComponent {
 
   onChange(event: Event): void {
     const target = event.target as HTMLInputElement | null;
-    this.checkedChange.emit(target?.checked ?? false);
-  }
-
-  onClick(event: MouseEvent): void {
-    if (this.disabled()) {
-      return;
-    }
-
-    this.clicked.emit(event);
+    const nextChecked = target?.checked ?? false;
+    this.checked.set(nextChecked);
   }
 
   private normalizedCustomClass(): string[] {
