@@ -24,7 +24,7 @@ import { DD_CHECKBOX_CSS } from "./dd-checkbox.style";
         [attr.name]="name()"
         [attr.id]="id()"
         [attr.aria-label]="ariaLabel()"
-        (click)="onClick($event)"
+        (click)="onClick()"
       />
       <span><ng-content /></span>
     </label>
@@ -59,7 +59,7 @@ export class DdCheckboxComponent implements FormCheckboxControl {
     this.dynamicStyle.loadStyle("checkbox", DD_CHECKBOX_CSS);
   }
 
-  onClick(event: Event): void {
+  onClick(): void {
     if (this.disabled()) {
       return;
     }
