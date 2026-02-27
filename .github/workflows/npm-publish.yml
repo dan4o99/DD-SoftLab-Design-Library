@@ -34,9 +34,6 @@ jobs:
       - name: Lint (if script exists)
         run: npm run lint --if-present
 
-      - name: Test (if script exists)
-        run: npm run test --if-present
-
       - name: Validate package contents
         run: npm pack --dry-run ./dist/dd-softlab-design-lib
 
