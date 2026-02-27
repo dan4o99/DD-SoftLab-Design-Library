@@ -1,3 +1,11 @@
+## [0.1.7](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.6...v0.1.7) (2026-02-27)
+
+
+### Bug Fixes
+
+* **checkbox_forms:** fix checkbox ([3b5a983](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/3b5a983769985cc7ed1236948da60058cdf3addb))
+* **checkbox_forms:** fix checkbox 2 ([37039f0](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/37039f012524cdd787576f4adeda7620bbdb81e1))
+
 ## [0.1.6](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.5...v0.1.6) (2026-02-27)
 
 
