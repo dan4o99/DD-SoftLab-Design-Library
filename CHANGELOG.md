@@ -1,3 +1,11 @@
+## [0.1.4](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.3...v0.1.4) (2026-02-27)
+
+
+### Bug Fixes
+
+* **tests:** Remove unit tests, commitlint and test CI ([16d0909](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/16d09094323c761c011ffc2453cc7ac6d0408c1c))
+* **tests:** Remove unit tests, commitlint and test CI ([#7](https://github.com/dan4o99/DD-SoftLab-Design-Library/issues/7)) ([7692bb5](https://github.com/dan4o99/DD-SoftLab-Design-Library/commit/7692bb576c4ffa6e36ff7661d7991f2b6302e8f6))
+
 ## [0.1.3](https://github.com/dan4o99/DD-SoftLab-Design-Library/compare/v0.1.2...v0.1.3) (2026-02-20)
 
 
