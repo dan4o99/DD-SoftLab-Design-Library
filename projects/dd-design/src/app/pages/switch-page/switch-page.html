@@ -1,0 +1,34 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Switch</h2>
+        <p>Toggle a binary setting with a switch.</p>
+
+        <div class="stack">
+          <dd-switch [checked]="primaryEnabled" (toggled)="onPrimaryToggled($event)">
+            Enabled switch
+          </dd-switch>
+          <dd-switch [checked]="secondaryEnabled" (toggled)="onSecondaryToggled($event)">
+            Unchecked switch
+          </dd-switch>
+          <dd-switch disabled>Disabled switch</dd-switch>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>checked, disabled</li>
+          <li>ariaLabel</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>toggled: boolean</li>
+          <li>clicked: MouseEvent</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

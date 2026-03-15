@@ -1,0 +1,57 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Toast</h2>
+        <p>Transient notifications injected via <code>DdToastService</code>.</p>
+
+        <p>
+          Place <code>&lt;dd-toast-container /&gt;</code> once in your app root
+          (e.g., <code>app.html</code>).
+        </p>
+
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap">
+          <dd-button (click)="showInfo()">Info toast</dd-button>
+          <dd-button (click)="showSuccess()">Success toast</dd-button>
+          <dd-button variant="secondary" (click)="showWarning()"
+            >Warning toast</dd-button
+          >
+          <dd-button variant="secondary" (click)="showDanger()"
+            >Error toast</dd-button
+          >
+        </div>
+
+        <!-- Container rendered inline for demo purposes -->
+        <dd-toast-container position="top-right" />
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>DdToastService</h3>
+        <ul>
+          <li>
+            <code>show(message, options?): string</code> — returns toast id
+          </li>
+          <li><code>dismiss(id): void</code></li>
+          <li><code>clear(): void</code></li>
+        </ul>
+        <h3>DdToastContainerComponent inputs</h3>
+        <ul>
+          <li>
+            <code
+              >position: 'top-right' | 'top-left' | 'bottom-right' |
+              'bottom-left'</code
+            >
+          </li>
+        </ul>
+        <h3>Toast options</h3>
+        <ul>
+          <li>
+            <code>variant: 'info' | 'success' | 'warning' | 'danger'</code>
+          </li>
+          <li><code>title: string</code></li>
+          <li><code>duration: number</code> (ms, 0 = persistent)</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

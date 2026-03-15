@@ -1,0 +1,29 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Rating</h2>
+        <p>A star-based rating component, interactive or read-only.</p>
+
+        <h3>Interactive</h3>
+        <dd-rating [(value)]="rating" />
+        <p>Rating: {{ rating() }} / 5</p>
+
+        <h3>Read-only (4 stars)</h3>
+        <dd-rating [value]="4" [readonly]="true" />
+
+        <h3>Custom max (10 stars)</h3>
+        <dd-rating [value]="7" [max]="10" [readonly]="true" />
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>value: number</code> — two-way bindable</li>
+          <li><code>max: number</code> — total stars (default 5)</li>
+          <li><code>readonly: boolean</code></li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

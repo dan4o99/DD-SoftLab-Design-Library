@@ -1,0 +1,26 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Tree View</h2>
+        <p>A hierarchical file-explorer-style component.</p>
+
+        <dd-tree-view [nodes]="tree" [(selected)]="selected" />
+        <p>Selected: <code>{{ selected() || '(none)' }}</code></p>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>
+            <code>nodes: DdTreeNode[]</code> — array of
+            <code>&#123; id, label, icon?, children? &#125;</code>
+          </li>
+          <li>
+            <code>selected: string</code> — two-way bindable selected node id
+          </li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

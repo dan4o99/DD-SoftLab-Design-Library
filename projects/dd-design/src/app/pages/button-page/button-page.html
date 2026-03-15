@@ -1,0 +1,83 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Button</h2>
+        <p>Buttons communicate actions with variants, sizes, and states.</p>
+
+        <div class="page-section">
+          <h3>Variants</h3>
+          <div class="row">
+            <dd-button>Primary</dd-button>
+            <dd-button variant="secondary">Secondary</dd-button>
+            <dd-button variant="danger">Danger</dd-button>
+            <dd-button variant="success">Success</dd-button>
+            <dd-button variant="warning">Warning</dd-button>
+            <dd-button variant="ghost">Ghost</dd-button>
+            <dd-button variant="link">Link</dd-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <h3>Sizes</h3>
+          <div class="row">
+            <dd-button size="small">Small</dd-button>
+            <dd-button>Medium</dd-button>
+            <dd-button size="large">Large</dd-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <h3>Styles</h3>
+          <div class="row">
+            <dd-button outlined>Outlined</dd-button>
+            <dd-button text>Text</dd-button>
+            <dd-button raised>Raised</dd-button>
+            <dd-button rounded>Rounded</dd-button>
+            <dd-button iconOnly aria-label="Icon only">*</dd-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <h3>States</h3>
+          <div class="row">
+            <dd-button loading>Loading</dd-button>
+            <dd-button disabled>Disabled</dd-button>
+            <dd-button variant="secondary" disabled>Secondary Disabled</dd-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <h3>Type</h3>
+          <div class="row">
+            <dd-button type="button">type=button</dd-button>
+            <dd-button type="submit">type=submit</dd-button>
+            <dd-button type="reset">type=reset</dd-button>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <h3>Fluid</h3>
+          <div class="button-fluid-sample">
+            <dd-button fluid>Fluid Button</dd-button>
+          </div>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>type: "button" | "submit" | "reset"</li>
+          <li>variant: primary | secondary | danger | success | warning | ghost | link</li>
+          <li>size: small | medium | large</li>
+          <li>outlined, text, raised, rounded, fluid, loading, iconOnly, disabled</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>clicked: MouseEvent</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

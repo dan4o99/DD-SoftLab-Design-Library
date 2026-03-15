@@ -32,7 +32,7 @@ import { DD_RADIO_CSS } from "./dd-radio.style";
   `,
 })
 export class DdRadioComponent {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly checked = input(false, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });
@@ -61,7 +61,6 @@ export class DdRadioComponent {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("radio", DD_RADIO_CSS);
   }
 

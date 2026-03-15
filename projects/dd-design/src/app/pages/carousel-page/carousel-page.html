@@ -1,0 +1,29 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Carousel</h2>
+        <p>Cycle through a series of content slides.</p>
+
+        <h3>3 Slides</h3>
+        <dd-carousel [count]="3" (slideChange)="onSlideChange($event)" />
+        <p>Current slide: {{ currentSlide() + 1 }}</p>
+
+        <h3>4 Slides with loop</h3>
+        <dd-carousel [count]="4" [loop]="true" />
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>count: number</code> — total number of slides</li>
+          <li><code>loop: boolean</code> — enable looping</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li><code>slideChange: number</code> — current slide index</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

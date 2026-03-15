@@ -57,7 +57,7 @@ import { DD_SIDEBAR_CSS } from "./dd-sidebar.style";
   `,
 })
 export class DdSidebarComponent implements OnDestroy {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
   private readonly document = inject(DOCUMENT);
   // Tracks the currently rendered width in pixels.
   private readonly currentWidth = signal(288);
@@ -97,7 +97,6 @@ export class DdSidebarComponent implements OnDestroy {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("sidebar", DD_SIDEBAR_CSS);
     this.currentWidth.set(this.width());
     this.lastExpandedWidth = this.width();

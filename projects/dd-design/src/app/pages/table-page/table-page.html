@@ -1,0 +1,83 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Table</h2>
+        <p>
+          Interactive tables with sorting, filtering, pagination, selection, and
+          loading states.
+        </p>
+
+        <h3>Basic (`columns`, `rows`)</h3>
+        <dd-table
+          [columns]="columns"
+          [rows]="rows()"
+          caption="Team members"
+        />
+
+        <h3>Filter + sort (`filterable`, `sortable`, `stickyHeader`)</h3>
+        <dd-table
+          [columns]="columns"
+          [rows]="rows()"
+          [filterable]="true"
+          [sortable]="true"
+          [stickyHeader]="true"
+          [pageSize]="5"
+          caption="Team members"
+        />
+
+        <h3>
+          Full interactive (`selectableRows`, `reorderableRows`,
+          `reorderableColumns`, `loading`)
+        </h3>
+        <p>Drag table headers and rows to reorder data.</p>
+
+        <dd-button variant="secondary" (clicked)="toggleLoading()">
+          {{ loading() ? 'Hide loading state' : 'Show loading state' }}
+        </dd-button>
+
+        <dd-table
+          [columns]="columns"
+          [rows]="rows()"
+          [striped]="true"
+          [filterable]="true"
+          [sortable]="true"
+          [stickyHeader]="true"
+          [selectableRows]="true"
+          [reorderableRows]="true"
+          [reorderableColumns]="true"
+          [pageSize]="3"
+          [loading]="loading()"
+          caption="Team members"
+          (rowsChange)="onRowsChange($event)"
+        />
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>
+            <code>columns: DdTableColumn[]</code> — array of
+            <code>&#123; key, label, width? &#125;</code>
+          </li>
+          <li><code>rows: Record&lt;string, unknown&gt;[]</code></li>
+          <li><code>striped: boolean</code></li>
+          <li><code>hoverable: boolean</code></li>
+          <li><code>caption: string</code></li>
+          <li>
+            <code>stickyHeader</code>, <code>selectableRows</code>,
+            <code>filterable</code>, <code>sortable</code>
+          </li>
+          <li>
+            <code>reorderableRows</code>, <code>reorderableColumns</code>,
+            <code>pageSize</code>, <code>loading</code>
+          </li>
+          <li>
+            <code>reorderableColumns</code> enables drag-and-drop header/column
+            reordering
+          </li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

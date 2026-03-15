@@ -1,0 +1,39 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>List</h2>
+        <p>Styled ordered and unordered lists.</p>
+
+        <h3>Unordered</h3>
+        <dd-list variant="unordered">
+          <li>Design tokens</li>
+          <li>Angular components</li>
+          <li>Accessibility built-in</li>
+        </dd-list>
+
+        <h3>Ordered</h3>
+        <dd-list variant="ordered">
+          <li>Install the package</li>
+          <li>Import the module</li>
+          <li>Use the component</li>
+        </dd-list>
+
+        <h3>With dividers</h3>
+        <dd-list variant="none" [dividers]="true">
+          <li>Item one</li>
+          <li>Item two</li>
+          <li>Item three</li>
+        </dd-list>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>variant: 'unordered' | 'ordered' | 'none'</code></li>
+          <li><code>dividers: boolean</code></li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

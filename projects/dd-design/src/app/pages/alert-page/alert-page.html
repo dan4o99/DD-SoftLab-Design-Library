@@ -1,0 +1,39 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Alert</h2>
+        <p>Status messaging for info and feedback states.</p>
+
+        <h3>Variants (`variant`)</h3>
+        <div class="stack">
+          <dd-alert>Informational alert message.</dd-alert>
+          <dd-alert variant="success">Success alert message.</dd-alert>
+          <dd-alert variant="warning">Warning alert message.</dd-alert>
+          <dd-alert variant="danger">Danger alert message.</dd-alert>
+        </div>
+
+        <h3>Role (`role`)</h3>
+        <div class="stack">
+          <dd-alert role="status">Status role for non-urgent updates.</dd-alert>
+          <dd-alert variant="danger" role="alert">
+            Alert role for urgent, interruptive messages.
+          </dd-alert>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>variant: info | success | warning | danger</li>
+          <li>role: status | alert</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>None</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

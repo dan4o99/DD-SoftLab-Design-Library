@@ -3,29 +3,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  forwardRef,
   inject,
   input,
   model,
   output,
-  signal,
 } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { FormCheckboxControl } from "@angular/forms/signals";
 import { DdDynamicStyleService } from "../../theming/dynamic-style.service";
 import { DD_SWITCH_CSS } from "./dd-switch.style";
 
 @Component({
   selector: "dd-switch",
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DdSwitchComponent),
-      multi: true,
-    },
-  ],
   template: `
     <span [class]="switchClass()" [attr.style]="switchStyle()">
       <button
@@ -33,7 +22,7 @@ import { DD_SWITCH_CSS } from "./dd-switch.style";
         type="button"
         role="switch"
         [attr.aria-checked]="isChecked()"
-        [disabled]="isDisabled()"
+        [disabled]="disabled()"
         [attr.aria-label]="ariaLabel()"
         (click)="onToggle($event)"
         (blur)="onBlur()"
@@ -44,14 +33,8 @@ import { DD_SWITCH_CSS } from "./dd-switch.style";
     </span>
   `,
 })
-export class DdSwitchComponent
-  implements ControlValueAccessor, FormCheckboxControl
-{
-  private readonly dynamicStyle: DdDynamicStyleService;
-  private readonly cvaDisabled = signal(false);
-
-  private onControlChange: (value: boolean) => void = () => {};
-  private onTouched: () => void = () => {};
+export class DdSwitchComponent implements FormCheckboxControl {
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly checked = model(false);
   readonly touched = model(false);
@@ -66,11 +49,10 @@ export class DdSwitchComponent
   readonly clicked = output<MouseEvent>();
 
   readonly isChecked = computed(() => this.checked());
-  readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
 
   readonly switchClass = computed(() => {
     const checkedClass = this.isChecked() ? "dd-switch--checked" : "";
-    const disabledClass = this.isDisabled() ? "dd-switch--disabled" : "";
+    const disabledClass = this.disabled() ? "dd-switch--disabled" : "";
 
     return [
       "dd-switch",
@@ -87,41 +69,23 @@ export class DdSwitchComponent
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("switch", DD_SWITCH_CSS);
   }
 
   onToggle(event: MouseEvent): void {
-    if (this.isDisabled()) {
+    if (this.disabled()) {
       return;
     }
 
     this.clicked.emit(event);
     const nextValue = !this.isChecked();
     this.checked.set(nextValue);
-    this.onControlChange(nextValue);
     this.toggled.emit(nextValue);
+    this.touched.set(true);
   }
 
   onBlur(): void {
     this.touched.set(true);
-    this.onTouched();
-  }
-
-  writeValue(value: boolean | null): void {
-    this.checked.set(Boolean(value));
-  }
-
-  registerOnChange(fn: (value: boolean) => void): void {
-    this.onControlChange = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.cvaDisabled.set(isDisabled);
   }
 
   private normalizedCustomClass(): string[] {

@@ -1,0 +1,35 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Segmented Control</h2>
+        <p>A set of mutually exclusive options displayed inline.</p>
+
+        <h3>View mode</h3>
+        <dd-segmented-control
+          [options]="viewOptions"
+          [(value)]="view"
+          ariaLabel="View mode"
+        />
+        <p>Selected: <code>{{ view() }}</code></p>
+
+        <h3>Time period</h3>
+        <dd-segmented-control
+          [options]="periodOptions"
+          [(value)]="period"
+          ariaLabel="Time period"
+        />
+        <p>Selected: <code>{{ period() }}</code></p>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>options: DdSegmentedControlOption[]</code></li>
+          <li><code>value: string</code> — two-way bindable</li>
+          <li><code>ariaLabel: string</code></li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

@@ -1,0 +1,47 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Progress Bar</h2>
+        <p>A horizontal bar showing completion status.</p>
+
+        <h3>Variants</h3>
+        <div class="stack">
+          <dd-progress-bar [value]="60" ariaLabel="Primary progress" />
+          <dd-progress-bar
+            [value]="80"
+            variant="success"
+            ariaLabel="Success progress"
+          />
+          <dd-progress-bar
+            [value]="45"
+            variant="warning"
+            ariaLabel="Warning progress"
+          />
+          <dd-progress-bar
+            [value]="30"
+            variant="danger"
+            ariaLabel="Danger progress"
+          />
+        </div>
+
+        <h3>Sizes</h3>
+        <div class="stack">
+          <dd-progress-bar [value]="50" size="small" ariaLabel="Small bar" />
+          <dd-progress-bar [value]="50" size="medium" ariaLabel="Medium bar" />
+          <dd-progress-bar [value]="50" size="large" ariaLabel="Large bar" />
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>value: number (0–100)</li>
+          <li>variant: primary | success | warning | danger</li>
+          <li>size: small | medium | large</li>
+          <li>ariaLabel, customClass</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

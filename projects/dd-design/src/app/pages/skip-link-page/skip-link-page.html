@@ -1,0 +1,51 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Skip Link</h2>
+        <p>
+          A visually hidden anchor that becomes visible on focus, allowing
+          keyboard users to skip navigation.
+        </p>
+
+        <h3>Usage</h3>
+        <p>
+          The skip link is visually hidden until focused. Tab into the area
+          below to see it appear:
+        </p>
+        <p style="font-style: italic; color: var(--dd-color-textMuted)">
+          The link below is rendered but hidden — press Tab to see it reveal at
+          the top of the viewport.
+        </p>
+        <dd-skip-link target="main-content" />
+
+        <div
+          id="main-content"
+          tabindex="-1"
+          style="
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border: 1px dashed var(--dd-color-border);
+            border-radius: 6px;
+          "
+        >
+          <strong>#main-content</strong> — the skip target
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>
+            <code>target: string</code> — id of the target element (default:
+            <code>main-content</code>)
+          </li>
+          <li>
+            <code>label: string</code> — link text (default: "Skip to main
+            content")
+          </li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

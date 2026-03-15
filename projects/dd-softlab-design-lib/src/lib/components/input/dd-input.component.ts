@@ -3,14 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  forwardRef,
   inject,
   input,
-  output,
-  signal,
   model,
+  output,
 } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { FormValueControl } from "@angular/forms/signals";
 import { DdDynamicStyleService } from "../../theming/dynamic-style.service";
 import { DD_INPUT_CSS } from "./dd-input.style";
@@ -18,13 +15,6 @@ import { DD_INPUT_CSS } from "./dd-input.style";
 @Component({
   selector: "dd-input",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DdInputComponent),
-      multi: true,
-    },
-  ],
   template: `
     <input
       [class]="inputClass()"
@@ -36,7 +26,7 @@ import { DD_INPUT_CSS } from "./dd-input.style";
       [attr.id]="id()"
       [required]="required()"
       [readonly]="readonly()"
-      [disabled]="isDisabled()"
+      [disabled]="disabled()"
       [attr.aria-label]="ariaLabel()"
       (input)="onInput($event)"
       (click)="onClick($event)"
@@ -44,19 +34,14 @@ import { DD_INPUT_CSS } from "./dd-input.style";
     />
   `,
 })
-export class DdInputComponent
-  implements ControlValueAccessor, FormValueControl<string>
-{
-  private readonly dynamicStyle: DdDynamicStyleService;
-  private readonly cvaDisabled = signal(false);
-
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+export class DdInputComponent implements FormValueControl<string> {
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly type = input<"text" | "email" | "password" | "number" | "search">(
     "text",
   );
   readonly value = model<string>("");
+  readonly touched = model(false);
   readonly placeholder = input<string>("");
   readonly name = input<string>("");
   readonly id = input<string>("");
@@ -71,9 +56,6 @@ export class DdInputComponent
 
   readonly clicked = output<MouseEvent>();
 
-  readonly touched = model(false);
-  readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
-
   readonly inputClass = computed(() =>
     ["dd-input", ...this.normalizedCustomClass()].join(" "),
   );
@@ -83,19 +65,16 @@ export class DdInputComponent
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("input", DD_INPUT_CSS);
   }
 
   onInput(event: Event): void {
     const target = event.target as HTMLInputElement | null;
-    const nextValue = target?.value ?? "";
-    this.value.set(nextValue);
-    this.onChange(nextValue);
+    this.value.set(target?.value ?? "");
   }
 
   onClick(event: MouseEvent): void {
-    if (this.isDisabled()) {
+    if (this.disabled()) {
       return;
     }
 
@@ -104,23 +83,6 @@ export class DdInputComponent
 
   onBlur(): void {
     this.touched.set(true);
-    this.onTouched();
-  }
-
-  writeValue(value: string | null): void {
-    this.value.set(value ?? "");
-  }
-
-  registerOnChange(fn: (value: string) => void): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.cvaDisabled.set(isDisabled);
   }
 
   private normalizedCustomClass(): string[] {

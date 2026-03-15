@@ -1,0 +1,51 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Sidebar</h2>
+        <p>Resizable, collapsible navigation with header content.</p>
+
+        <div class="sidebar-demo">
+          <dd-sidebar
+            [width]="sidebarWidth"
+            [minWidth]="200"
+            [maxWidth]="360"
+            [collapsedWidth]="72"
+            [collapsable]="true"
+            [collapsed]="sidebarCollapsed"
+            [customStyle]="sidebarStyle"
+            (widthChange)="onSidebarWidthChange($event)"
+            (collapsedChange)="onSidebarCollapsedChange($event)"
+          >
+            <div sidebar-header>
+              <h3>Workspace</h3>
+              <p class="sidebar-note">Pinned navigation sample</p>
+            </div>
+            <dd-menu>
+              <dd-menu-item href="#">Overview</dd-menu-item>
+              <dd-menu-item href="#">Tokens</dd-menu-item>
+              <dd-menu-item href="#">Components</dd-menu-item>
+              <dd-menu-item href="#" disabled>Disabled</dd-menu-item>
+            </dd-menu>
+          </dd-sidebar>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>ariaLabel, resizerLabel</li>
+          <li>width, minWidth, maxWidth, collapsedWidth</li>
+          <li>collapsed, collapsable</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>clicked: MouseEvent</li>
+          <li>collapsedChange: boolean</li>
+          <li>widthChange: number</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

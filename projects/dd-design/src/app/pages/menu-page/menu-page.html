@@ -1,0 +1,54 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Menu</h2>
+        <p>Navigation lists for vertical and horizontal layouts.</p>
+
+        <div class="page-section">
+          <h3>Vertical</h3>
+          <dd-menu>
+            <dd-menu-item href="#">Overview</dd-menu-item>
+            <dd-menu-item href="#">Tokens</dd-menu-item>
+            <dd-menu-item href="#">Components</dd-menu-item>
+            <dd-menu-item href="#" disabled>Disabled</dd-menu-item>
+          </dd-menu>
+        </div>
+
+        <div class="page-section">
+          <h3>Horizontal</h3>
+          <dd-menu orientation="horizontal">
+            <dd-menu-item href="#">Overview</dd-menu-item>
+            <dd-menu-item href="#">Tokens</dd-menu-item>
+            <dd-menu-item href="#">Components</dd-menu-item>
+            <dd-menu-item href="#" disabled>Disabled</dd-menu-item>
+          </dd-menu>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>DdMenu Inputs</h3>
+        <ul>
+          <li>ariaLabel, orientation</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>DdMenu Outputs</h3>
+        <ul>
+          <li>clicked: MouseEvent</li>
+          <li>itemClicked: {{ '{' }} event: MouseEvent, href: string | null {{ '}' }}</li>
+        </ul>
+
+        <h3>DdMenuItem Inputs</h3>
+        <ul>
+          <li>href, routerLink, routerLinkActiveClass, routerLinkActiveOptions</li>
+          <li>target, rel, disabled</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>DdMenuItem Outputs</h3>
+        <ul>
+          <li>clicked: MouseEvent</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

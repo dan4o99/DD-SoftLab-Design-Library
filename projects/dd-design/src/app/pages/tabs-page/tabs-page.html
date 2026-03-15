@@ -1,0 +1,42 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Tabs</h2>
+        <p>Tab navigation with active states and optional content slots.</p>
+
+        <div class="page-section">
+          <h3>Default</h3>
+          <dd-tabs>
+            <dd-tab id="overview" label="Overview">
+              <p>Summary content for the overview tab.</p>
+            </dd-tab>
+            <dd-tab id="tokens" label="Tokens">
+              <p>Token reference and naming conventions.</p>
+            </dd-tab>
+            <dd-tab id="themes" label="Themes">
+              <p>Theme and scheme switching guidance.</p>
+            </dd-tab>
+            <dd-tab id="disabled" label="Disabled" disabled>
+              <p>Disabled tab.</p>
+            </dd-tab>
+          </dd-tabs>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>dd-tab children: id, label, disabled</li>
+          <li>activeTab, ariaLabel</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>changed: string</li>
+          <li>clicked: string</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

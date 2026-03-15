@@ -1,0 +1,31 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Fieldset</h2>
+        <p>A semantic grouping for related form controls.</p>
+
+        <h3>Preferences</h3>
+        <dd-fieldset legend="Notifications">
+          <dd-checkbox>Email notifications</dd-checkbox>
+          <dd-checkbox>SMS notifications</dd-checkbox>
+          <dd-checkbox>Push notifications</dd-checkbox>
+        </dd-fieldset>
+
+        <h3>Disabled state</h3>
+        <dd-fieldset legend="Disabled group" [disabled]="true">
+          <dd-radio name="disabled-group" value="a">Option A</dd-radio>
+          <dd-radio name="disabled-group" value="b">Option B</dd-radio>
+        </dd-fieldset>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>legend: string</code></li>
+          <li><code>disabled: boolean</code></li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

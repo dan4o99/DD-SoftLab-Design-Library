@@ -28,7 +28,7 @@ import { DD_LINK_CSS } from "./dd-link.style";
   `,
 })
 export class DdLinkComponent {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly href = input<string>("#");
   readonly target = input<"_self" | "_blank" | "_parent" | "_top">("_self");
@@ -53,7 +53,6 @@ export class DdLinkComponent {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("link", DD_LINK_CSS);
   }
 

@@ -62,7 +62,7 @@ import { DdTabComponent } from "./dd-tab.component";
             role="tabpanel"
             [attr.id]="'panel-' + currentActiveTab()"
           >
-            <ng-container *ngTemplateOutlet="tmpl" />
+            <ng-container [ngTemplateOutlet]="tmpl" />
           </div>
         }
       </div>
@@ -70,7 +70,7 @@ import { DdTabComponent } from "./dd-tab.component";
   `,
 })
 export class DdTabsComponent {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
   private readonly internalActiveTab = signal<string>("");
 
   /** Child DdTabComponent instances projected inside this host. */
@@ -101,7 +101,7 @@ export class DdTabsComponent {
   readonly activeTabTemplate = computed(() => {
     const activeId = this.currentActiveTab();
     const tab = this.tabChildren().find((t) => t.id() === activeId);
-    return tab?.contentTemplate ?? null;
+    return tab?.contentTemplate() ?? null;
   });
 
   readonly wrapperClass = computed(() =>
@@ -113,7 +113,6 @@ export class DdTabsComponent {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("tabs", DD_TABS_CSS);
   }
 

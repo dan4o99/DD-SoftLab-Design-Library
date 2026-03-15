@@ -1,0 +1,32 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Button Group</h2>
+        <p>Group related buttons together without spacing between them.</p>
+
+        <h3>Horizontal (default)</h3>
+        <dd-button-group>
+          <dd-button variant="secondary">Left</dd-button>
+          <dd-button variant="secondary">Center</dd-button>
+          <dd-button variant="secondary">Right</dd-button>
+        </dd-button-group>
+
+        <h3>Vertical</h3>
+        <dd-button-group [vertical]="true">
+          <dd-button variant="secondary">Top</dd-button>
+          <dd-button variant="secondary">Middle</dd-button>
+          <dd-button variant="secondary">Bottom</dd-button>
+        </dd-button-group>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>vertical: boolean</code> — stack buttons vertically</li>
+          <li><code>ariaLabel: string</code> — accessible group label</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

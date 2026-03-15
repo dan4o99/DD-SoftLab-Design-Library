@@ -1,0 +1,32 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Search Input</h2>
+        <p>A text field with built-in search icon and clear button.</p>
+
+        <h3>Interactive</h3>
+        <dd-search-input [(value)]="query" placeholder="Search anything…" />
+        <p>Query: <code>{{ query() || '(empty)' }}</code></p>
+
+        <h3>Disabled</h3>
+        <dd-search-input [disabled]="true" placeholder="Search disabled" />
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>value: string</code> — two-way bindable</li>
+          <li><code>placeholder: string</code></li>
+          <li><code>disabled: boolean</code></li>
+          <li><code>ariaLabel: string</code></li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li><code>searched: string</code></li>
+          <li><code>cleared: void</code></li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

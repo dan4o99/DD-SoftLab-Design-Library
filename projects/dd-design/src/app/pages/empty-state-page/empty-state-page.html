@@ -1,0 +1,39 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Empty State</h2>
+        <p>A placeholder shown when there is no content to display.</p>
+
+        <h3>Default</h3>
+        <dd-empty-state
+          icon="📭"
+          title="No messages"
+          description="You don't have any messages yet."
+        />
+
+        <h3>With action slot</h3>
+        <dd-empty-state
+          icon="🗂️"
+          title="No files found"
+          description="Upload your first file to get started."
+        >
+          <dd-button action-slot>Upload file</dd-button>
+        </dd-empty-state>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>icon: string</code> — emoji or text icon</li>
+          <li><code>title: string</code></li>
+          <li><code>description: string</code></li>
+        </ul>
+        <h3>Slots</h3>
+        <ul>
+          <li><code>[action-slot]</code> — action button area</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

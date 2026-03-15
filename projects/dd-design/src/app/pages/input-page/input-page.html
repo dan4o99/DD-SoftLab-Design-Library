@@ -1,0 +1,48 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Input</h2>
+        <p>Text inputs with multiple types and states.</p>
+
+        <div class="stack">
+          <div class="field">
+            <label class="field-label">Text</label>
+            <dd-input placeholder="Enter text" ariaLabel="Text input"></dd-input>
+          </div>
+          <div class="field">
+            <label class="field-label">Email</label>
+            <dd-input
+              type="email"
+              placeholder="name@example.com"
+              ariaLabel="Email input"
+            ></dd-input>
+          </div>
+          <div class="field">
+            <label class="field-label">Password</label>
+            <dd-input type="password" placeholder="Password" ariaLabel="Password input"></dd-input>
+          </div>
+          <div class="field">
+            <label class="field-label">Search</label>
+            <dd-input type="search" placeholder="Search" ariaLabel="Search input"></dd-input>
+          </div>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>type: text | email | password | number | search</li>
+          <li>value, placeholder, name, id, ariaLabel</li>
+          <li>required, readonly, disabled</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>valueChange: string</li>
+          <li>clicked: MouseEvent</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

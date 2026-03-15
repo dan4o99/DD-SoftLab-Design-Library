@@ -1,0 +1,64 @@
+@use "../../dd-softlab-design-lib/src/lib/theming/utility-classes.scss";
+@use "../../dd-softlab-design-lib/src/lib/theming/theme-tokens.generated.scss"
+  as *;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--dd-color-surface);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dd-space-md, 1rem);
+}
+
+.page-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dd-space-sm, 0.75rem);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--dd-space-sm, 0.75rem);
+  align-items: center;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dd-space-sm, 0.75rem);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dd-space-xs, 0.5rem);
+}
+
+.field-label {
+  font-size: 0.9rem;
+  color: var(--dd-color-text-muted, #6b7280);
+}
+
+h1 {
+  margin: 0 0 toCssVar("space.xs");
+}
+
+h2,
+h3 {
+  margin: 0 0 toCssVar("space.md");
+}
+
+h2 + p {
+  margin-top: 0;
+}

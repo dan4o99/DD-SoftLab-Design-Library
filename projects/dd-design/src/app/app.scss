@@ -1,0 +1,69 @@
+@use "../../../dd-softlab-design-lib/src/lib/theming/theme-tokens.generated.scss"
+  as *;
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: toCssVar("space.lg");
+  background: toCssVar("color.surface");
+  color: toCssVar("color.text");
+  font-family: toCssVar("font.family.base");
+  font-size: toCssVar("font.size.base");
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: toCssVar("space.md");
+  margin-bottom: toCssVar("space.lg");
+  flex-wrap: wrap;
+}
+
+.header-switcher {
+  display: flex;
+  align-items: center;
+  gap: toCssVar("space.md");
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.header-field {
+  display: flex;
+  flex-direction: column;
+  gap: toCssVar("space.xs");
+  min-width: 160px;
+}
+
+.header-label {
+  font-size: 0.8rem;
+  color: toCssVar("color.textMuted");
+}
+
+.app-layout {
+  display: flex;
+  align-items: stretch;
+  gap: toCssVar("space.lg");
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.app-content {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.sidebar-subtitle {
+  margin: 0;
+  font-size: 0.85rem;
+  color: toCssVar("color.textMuted");
+}
+
+@media (max-width: 960px) {
+  .app-layout {
+    flex-direction: column;
+    gap: toCssVar("space.md");
+  }
+}

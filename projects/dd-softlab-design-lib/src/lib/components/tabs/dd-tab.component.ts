@@ -4,7 +4,7 @@ import {
   Component,
   input,
   TemplateRef,
-  ViewChild,
+  viewChild,
 } from "@angular/core";
 
 /**
@@ -40,6 +40,6 @@ export class DdTabComponent {
   readonly disabled = input(false, { transform: booleanAttribute });
 
   /** Reference to the content template, read by the parent DdTabsComponent. */
-  @ViewChild("contentTemplate", { static: true })
-  contentTemplate!: TemplateRef<unknown>;
+  readonly contentTemplate =
+    viewChild.required<TemplateRef<unknown>>("contentTemplate");
 }

@@ -1,0 +1,35 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Popover</h2>
+        <p>A click-triggered overlay with a title and body content.</p>
+
+        <h3>Bottom (default)</h3>
+        <dd-popover title="Did you know?">
+          <dd-button popover-trigger variant="secondary">Click me</dd-button>
+          Popovers are great for contextual help without leaving the page.
+        </dd-popover>
+
+        <h3>Top position</h3>
+        <dd-popover title="Top popover" position="top">
+          <dd-button popover-trigger variant="ghost">Open above</dd-button>
+          Content appears above the trigger element.
+        </dd-popover>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>title: string</code></li>
+          <li><code>position: 'top' | 'bottom' | 'left' | 'right'</code></li>
+        </ul>
+        <h3>Slots</h3>
+        <ul>
+          <li><code>[popover-trigger]</code> — the trigger element</li>
+          <li>Default content — popover body</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

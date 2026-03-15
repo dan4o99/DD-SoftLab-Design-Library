@@ -32,7 +32,7 @@ import { DdDynamicStyleService } from "../../theming/dynamic-style.service";
   `,
 })
 export class DdButtonComponent {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly type = input<"button" | "submit" | "reset">("button");
   readonly variant = input<DdButtonVariant>("primary");
@@ -73,7 +73,6 @@ export class DdButtonComponent {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("button", DD_BUTTON_CSS);
   }
 

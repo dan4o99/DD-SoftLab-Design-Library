@@ -1,0 +1,56 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Dropdown</h2>
+        <p>Dropdown selection with native options.</p>
+
+        <div class="stack">
+          <div class="field">
+            <label class="field-label">Default</label>
+            <dd-dropdown ariaLabel="Select option">
+              <option value="">Choose an option</option>
+              <option value="alpha">Alpha</option>
+              <option value="beta">Beta</option>
+              <option value="gamma">Gamma</option>
+            </dd-dropdown>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Searchable</label>
+            <dd-dropdown
+              ariaLabel="Searchable dropdown"
+              [options]="searchableOptions"
+              [searchable]="true"
+              [value]="selectedValue()"
+              (valueChange)="onValueChange($event)"
+            />
+          </div>
+
+          <div class="field">
+            <label class="field-label">Disabled</label>
+            <dd-dropdown ariaLabel="Disabled dropdown" disabled>
+              <option value="">Disabled dropdown</option>
+            </dd-dropdown>
+          </div>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>value, name, id, ariaLabel</li>
+          <li>options, searchable, placeholder, searchPlaceholder</li>
+          <li>required, disabled</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>valueChange: string</li>
+          <li>itemSelected: string</li>
+          <li>clicked: MouseEvent</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

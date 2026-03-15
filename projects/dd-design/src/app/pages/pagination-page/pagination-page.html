@@ -1,0 +1,35 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Pagination</h2>
+        <p>Navigate between pages of content.</p>
+
+        <h3>Interactive (20 pages)</h3>
+        <dd-pagination
+          [currentPage]="currentPage()"
+          [totalPages]="20"
+          (pageChange)="onPageChange($event)"
+        />
+        <p>Current page: {{ currentPage() }}</p>
+
+        <h3>Few pages</h3>
+        <dd-pagination [currentPage]="3" [totalPages]="5" />
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>currentPage: number</li>
+          <li>totalPages: number</li>
+          <li>siblingCount: number (pages to show around current)</li>
+          <li>ariaLabel, customClass</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>pageChange: number</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

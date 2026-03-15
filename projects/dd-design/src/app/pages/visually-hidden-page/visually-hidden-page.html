@@ -1,0 +1,44 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Visually Hidden</h2>
+        <p>
+          Content that is hidden visually but remains accessible to screen
+          readers.
+        </p>
+
+        <h3>Icon button with accessible label</h3>
+        <button
+          type="button"
+          aria-label="Close"
+          style="
+            font-size: 1.25rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          ✕
+          <dd-visually-hidden>Close dialog</dd-visually-hidden>
+        </button>
+
+        <h3>Standalone text</h3>
+        <p>
+          Look at the source — there is visually hidden text between these
+          brackets: [<dd-visually-hidden
+            >This text is hidden visually</dd-visually-hidden
+          >]
+        </p>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <p>
+          <code>&lt;dd-visually-hidden&gt;</code> wraps content in a
+          <code>.dd-visually-hidden</code> span using the standard CSS clip
+          technique. No inputs.
+        </p>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

@@ -1,0 +1,110 @@
+import { Routes } from "@angular/router";
+import { AccordionPage } from "./pages/accordion-page/accordion-page";
+import { AlertPage } from "./pages/alert-page/alert-page";
+import { AvatarPage } from "./pages/avatar-page/avatar-page";
+import { BadgePage } from "./pages/badge-page/badge-page";
+import { BreadcrumbsPage } from "./pages/breadcrumbs-page/breadcrumbs-page";
+import { ButtonPage } from "./pages/button-page/button-page";
+import { ButtonGroupPage } from "./pages/button-group-page/button-group-page";
+import { CardPage } from "./pages/card-page/card-page";
+import { CarouselPage } from "./pages/carousel-page/carousel-page";
+import { CheckboxPage } from "./pages/checkbox-page/checkbox-page";
+import { ChipPage } from "./pages/chip-page/chip-page";
+import { ColorPickerPage } from "./pages/color-picker-page/color-picker-page";
+import { ComboboxPage } from "./pages/combobox-page/combobox-page";
+import { ContextMenuPage } from "./pages/context-menu-page/context-menu-page";
+import { DatePickerPage } from "./pages/date-picker-page/date-picker-page";
+import { DrawerPage } from "./pages/drawer-page/drawer-page";
+import { DropdownPage } from "./pages/dropdown-page/dropdown-page";
+import { EmptyStatePage } from "./pages/empty-state-page/empty-state-page";
+import { FieldsetPage } from "./pages/fieldset-page/fieldset-page";
+import { HeadingPage } from "./pages/heading-page/heading-page";
+import { IconPage } from "./pages/icon-page/icon-page";
+import { InputPage } from "./pages/input-page/input-page";
+import { LabelPage } from "./pages/label-page/label-page";
+import { LinkPage } from "./pages/link-page/link-page";
+import { ListPage } from "./pages/list-page/list-page";
+import { MenuPage } from "./pages/menu-page/menu-page";
+import { ModalPage } from "./pages/modal-page/modal-page";
+import { MultipleChoiceSelectPage } from "./pages/multiple-choice-select-page/multiple-choice-select-page";
+import { PaginationPage } from "./pages/pagination-page/pagination-page";
+import { PopoverPage } from "./pages/popover-page/popover-page";
+import { ProgressBarPage } from "./pages/progress-bar-page/progress-bar-page";
+import { ProgressIndicatorPage } from "./pages/progress-indicator-page/progress-indicator-page";
+import { QuotePage } from "./pages/quote-page/quote-page";
+import { RadioPage } from "./pages/radio-page/radio-page";
+import { RatingPage } from "./pages/rating-page/rating-page";
+import { SearchInputPage } from "./pages/search-input-page/search-input-page";
+import { SegmentedControlPage } from "./pages/segmented-control-page/segmented-control-page";
+import { SeparatorPage } from "./pages/separator-page/separator-page";
+import { SidebarPage } from "./pages/sidebar-page/sidebar-page";
+import { SkeletonPage } from "./pages/skeleton-page/skeleton-page";
+import { SkipLinkPage } from "./pages/skip-link-page/skip-link-page";
+import { SliderPage } from "./pages/slider-page/slider-page";
+import { SpinnerPage } from "./pages/spinner-page/spinner-page";
+import { StepperPage } from "./pages/stepper-page/stepper-page";
+import { SwitchPage } from "./pages/switch-page/switch-page";
+import { TablePage } from "./pages/table-page/table-page";
+import { TabsPage } from "./pages/tabs-page/tabs-page";
+import { TextareaPage } from "./pages/textarea-page/textarea-page";
+import { ToastPage } from "./pages/toast-page/toast-page";
+import { TooltipPage } from "./pages/tooltip-page/tooltip-page";
+import { TreeViewPage } from "./pages/tree-view-page/tree-view-page";
+import { VisuallyHiddenPage } from "./pages/visually-hidden-page/visually-hidden-page";
+
+export const routes: Routes = [
+  { path: "", pathMatch: "full", redirectTo: "button" },
+  { path: "accordion", component: AccordionPage },
+  { path: "alert", component: AlertPage },
+  { path: "avatar", component: AvatarPage },
+  { path: "badge", component: BadgePage },
+  { path: "breadcrumbs", component: BreadcrumbsPage },
+  { path: "button", component: ButtonPage },
+  { path: "button-group", component: ButtonGroupPage },
+  { path: "card", component: CardPage },
+  { path: "carousel", component: CarouselPage },
+  { path: "checkbox", component: CheckboxPage },
+  { path: "chip", component: ChipPage },
+  { path: "color-picker", component: ColorPickerPage },
+  { path: "combobox", component: ComboboxPage },
+  { path: "context-menu", component: ContextMenuPage },
+  { path: "date-picker", component: DatePickerPage },
+  { path: "drawer", component: DrawerPage },
+  { path: "dropdown", component: DropdownPage },
+  { path: "empty-state", component: EmptyStatePage },
+  { path: "fieldset", component: FieldsetPage },
+  { path: "heading", component: HeadingPage },
+  { path: "icon", component: IconPage },
+  { path: "input", component: InputPage },
+  { path: "label", component: LabelPage },
+  { path: "link", component: LinkPage },
+  { path: "list", component: ListPage },
+  { path: "menu", component: MenuPage },
+  { path: "modal", component: ModalPage },
+  { path: "multiple-choice-select", component: MultipleChoiceSelectPage },
+  { path: "pagination", component: PaginationPage },
+  { path: "popover", component: PopoverPage },
+  { path: "progress-bar", component: ProgressBarPage },
+  { path: "progress-indicator", component: ProgressIndicatorPage },
+  { path: "quote", component: QuotePage },
+  { path: "radio", component: RadioPage },
+  { path: "rating", component: RatingPage },
+  { path: "search-input", component: SearchInputPage },
+  { path: "segmented-control", component: SegmentedControlPage },
+  { path: "separator", component: SeparatorPage },
+  { path: "sidebar", component: SidebarPage },
+  { path: "skeleton", component: SkeletonPage },
+  { path: "skip-link", component: SkipLinkPage },
+  { path: "slider", component: SliderPage },
+  { path: "spinner", component: SpinnerPage },
+  { path: "stepper", component: StepperPage },
+  { path: "switch", component: SwitchPage },
+  { path: "table", component: TablePage },
+  { path: "tabs", component: TabsPage },
+  { path: "textarea", component: TextareaPage },
+  { path: "toast", component: ToastPage },
+  { path: "tooltip", component: TooltipPage },
+  { path: "tree-view", component: TreeViewPage },
+  { path: "visually-hidden", component: VisuallyHiddenPage },
+  { path: "**", redirectTo: "button" },
+];

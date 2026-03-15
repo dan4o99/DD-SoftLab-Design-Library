@@ -1,0 +1,32 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Context Menu</h2>
+        <p>A contextual menu triggered by a button.</p>
+
+        <dd-context-menu [items]="items" (itemSelected)="onAction($event)">
+          <dd-button dropdown-trigger variant="secondary">Actions ▾</dd-button>
+        </dd-context-menu>
+
+        <p>Last action: <code>{{ lastAction() }}</code></p>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>items: DdContextMenuEntry[]</code></li>
+          <li><code>align: 'left' | 'right'</code></li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li><code>itemSelected: string</code> — value of selected item</li>
+        </ul>
+        <h3>Slots</h3>
+        <ul>
+          <li><code>[dropdown-trigger]</code> — the trigger element</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

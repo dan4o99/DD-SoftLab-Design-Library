@@ -1,0 +1,30 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Radio</h2>
+        <p>Select one option from a set.</p>
+
+        <div class="stack">
+          <dd-radio name="plan" value="basic" checked>Basic plan</dd-radio>
+          <dd-radio name="plan" value="pro">Pro plan</dd-radio>
+          <dd-radio name="plan" value="team" disabled>Team (disabled)</dd-radio>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>checked, disabled, required</li>
+          <li>value, name, id, ariaLabel</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>selected: string</li>
+          <li>clicked: MouseEvent</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

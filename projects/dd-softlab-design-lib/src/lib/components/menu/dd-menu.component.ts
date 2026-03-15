@@ -29,7 +29,7 @@ export interface DdMenuItemClickEvent {
   `,
 })
 export class DdMenuComponent {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly ariaLabel = input<string>("Menu");
   readonly orientation = input<"vertical" | "horizontal">("vertical");
@@ -55,7 +55,6 @@ export class DdMenuComponent {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("menu", DD_MENU_CSS);
   }
 

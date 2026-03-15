@@ -1,0 +1,34 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Icon</h2>
+        <p>SVG icon wrapper with size variants.</p>
+
+        <h3>Inline SVG</h3>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <dd-icon [svg]="starSvg" size="small" ariaLabel="Star" />
+          <dd-icon [svg]="heartSvg" ariaLabel="Heart" />
+          <dd-icon [svg]="starSvg" size="large" ariaLabel="Large star" />
+        </div>
+
+        <h3>Content projection (emoji fallback)</h3>
+        <dd-icon>⭐</dd-icon>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>
+            <code>svg: string</code> — raw SVG markup (bypasses security via
+            DomSanitizer)
+          </li>
+          <li><code>size: 'small' | 'medium' | 'large'</code></li>
+          <li>
+            <code>ariaLabel: string</code> — sets role="img" when provided
+          </li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

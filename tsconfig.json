@@ -14,6 +14,14 @@
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "bundler",
+    "paths": {
+      "@dd-softlab/dd-softlab-design-lib": [
+        "./projects/dd-softlab-design-lib/src/public-api.ts"
+      ],
+      "@dd-softlab/dd-softlab-design-lib/*": [
+        "./projects/dd-softlab-design-lib/*"
+      ]
+    },
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"]
   },

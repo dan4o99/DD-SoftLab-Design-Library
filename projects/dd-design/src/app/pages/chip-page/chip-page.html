@@ -1,0 +1,44 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Chip</h2>
+        <p>Compact chips for quick actions or tags.</p>
+
+        <div class="row">
+          <dd-chip>Design</dd-chip>
+          <dd-chip>Tokens</dd-chip>
+          <dd-chip>Theme</dd-chip>
+          <dd-chip disabled>Disabled</dd-chip>
+        </div>
+
+        <h3>Removable</h3>
+        <div class="row">
+          @for (chip of removableChips(); track chip) {
+          <dd-chip
+            removable
+            [ariaLabel]="chip"
+            [removeAriaLabel]="'Remove ' + chip"
+            (removed)="removeChip(chip)"
+          >
+            {{ chip }}
+          </dd-chip>
+          }
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>disabled, ariaLabel</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>clicked: MouseEvent</li>
+          <li>removed: void</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

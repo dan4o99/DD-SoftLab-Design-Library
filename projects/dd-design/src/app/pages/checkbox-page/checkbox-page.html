@@ -1,0 +1,32 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Checkbox</h2>
+        <p>Select multiple independent options.</p>
+
+        <form novalidate>
+          <div class="stack">
+            <dd-checkbox [formField]="checkboxForm.checked1">Subscribe to updates</dd-checkbox>
+            <dd-checkbox [formField]="checkboxForm.checked2">Send marketing emails</dd-checkbox>
+            <dd-checkbox [formField]="checkboxForm.checked3">Disabled checkbox</dd-checkbox>
+          </div>
+        </form>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>checked, disabled, required</li>
+          <li>name, id, ariaLabel</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>checkedChange: boolean</li>
+          <li>clicked: MouseEvent</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

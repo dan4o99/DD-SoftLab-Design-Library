@@ -1,0 +1,40 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Label</h2>
+        <p>
+          A form label that associates with a control via the
+          <code>for</code> attribute.
+        </p>
+
+        <h3>Basic</h3>
+        <dd-label for="name-field">Full name</dd-label>
+        <dd-input id="name-field" placeholder="Enter your name" />
+
+        <h3>Required</h3>
+        <dd-label for="email-field" [required]="true">Email address</dd-label>
+        <dd-input id="email-field" type="email" placeholder="you@example.com" />
+
+        <h3>Disabled</h3>
+        <dd-label for="disabled-field" [disabled]="true"
+          >Disabled field</dd-label
+        >
+        <dd-input
+          id="disabled-field"
+          [disabled]="true"
+          placeholder="Not editable"
+        />
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>for: string</code> — id of the associated control</li>
+          <li><code>required: boolean</code> — shows asterisk</li>
+          <li><code>disabled: boolean</code></li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

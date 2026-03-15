@@ -40,12 +40,32 @@ export const DD_ACCORDION_CSS = `
 }
 
 .dd-accordion__content {
-  display: none;
-  padding: ${toCssVar("space.md")};
-  border-top: 1px solid ${toCssVar("color.border")};
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  border-top: 1px solid transparent;
+  pointer-events: none;
+  will-change: grid-template-rows, opacity;
+  transition:
+    grid-template-rows 220ms ease,
+    opacity 180ms ease,
+    border-color 220ms ease;
+}
+
+.dd-accordion__content-inner {
+  overflow: hidden;
+  padding: 0;
+  transition: padding 220ms ease;
 }
 
 .dd-accordion__content--open {
-  display: block;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  border-top-color: ${toCssVar("color.border")};
+  pointer-events: auto;
+}
+
+.dd-accordion__content--open .dd-accordion__content-inner {
+  padding: ${toCssVar("space.md")};
 }
 `;

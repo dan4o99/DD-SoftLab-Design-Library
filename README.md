@@ -3,7 +3,28 @@
 This repository is structured with a clear separation between:
 
 - **Library source**: `projects/dd-softlab-design-lib/`
+- **Showcase app**: `projects/dd-design/`
 - **Build/package/publish tooling**: repository root (`angular.json`, `package.json`, `scripts/`, root `tsconfig.json`)
+
+## Showcase app
+
+The repository also contains a local Angular showcase application in `projects/dd-design/`.
+
+Use it to preview and develop the component library locally without affecting the published package.
+
+From the repository root:
+
+```bash
+npm run start:showcase
+```
+
+Production build:
+
+```bash
+npm run build:showcase
+```
+
+The showcase consumes the in-repo library source during development, while publishing and release automation remain scoped to `dist/dd-softlab-design-lib`.
 
 ## Build
 

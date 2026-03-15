@@ -14,7 +14,6 @@ import { DD_MENU_ITEM_CSS } from "./dd-menu-item.style";
 @Component({
   selector: "dd-menu-item",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterLink, RouterLinkActive],
   template: `
     <a
@@ -36,7 +35,7 @@ import { DD_MENU_ITEM_CSS } from "./dd-menu-item.style";
   `,
 })
 export class DdMenuItemComponent {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly href = input<string>("");
   readonly routerLink = input<string | string[] | null>(null);
@@ -78,7 +77,6 @@ export class DdMenuItemComponent {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("menu-item", DD_MENU_ITEM_CSS);
   }
 

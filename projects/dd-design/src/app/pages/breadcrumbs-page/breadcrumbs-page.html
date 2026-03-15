@@ -1,0 +1,38 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Breadcrumbs</h2>
+        <p>A navigational trail showing the current page location.</p>
+
+        <h3>Default separator</h3>
+        <dd-breadcrumbs
+          [items]="[
+            { label: 'Home', url: '#' },
+            { label: 'Components', url: '#' },
+            { label: 'Breadcrumbs' }
+          ]"
+        />
+
+        <h3>Custom separator</h3>
+        <dd-breadcrumbs
+          separator="›"
+          [items]="[
+            { label: 'Dashboard', url: '#' },
+            { label: 'Settings', url: '#' },
+            { label: 'Profile' }
+          ]"
+        />
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>items: DdBreadcrumbItem[] — array of label/url objects</li>
+          <li>separator: string (default "/")</li>
+          <li>ariaLabel, customClass</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

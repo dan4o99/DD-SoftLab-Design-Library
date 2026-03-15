@@ -2,9 +2,9 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  computed,
   ElementRef,
-  HostListener,
+  computed,
+  effect,
   inject,
   input,
   output,
@@ -21,6 +21,9 @@ export interface MultipleChoiceOption {
 @Component({
   selector: "dd-multiple-choice-select",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    "(document:click)": "onDocumentClick($event)",
+  },
   template: `
     <div [class]="wrapperClass()" [attr.style]="wrapperStyle()">
       @if (label()) {
@@ -70,19 +73,36 @@ export interface MultipleChoiceOption {
 
         @if (isOpen()) {
           <div class="dd-multiple-choice-select__wrapper">
-            @for (option of options(); track option.id) {
-              <label class="dd-multiple-choice-select__option">
-                <input
-                  type="checkbox"
-                  class="dd-multiple-choice-select__checkbox"
-                  [checked]="isSelected(option.id)"
-                  [disabled]="disabled()"
-                  (change)="toggleOption(option.id)"
-                />
-                <span class="dd-multiple-choice-select__option-label">
-                  {{ option.label }}
-                </span>
-              </label>
+            @if (searchable()) {
+              <input
+                class="dd-multiple-choice-select__search"
+                type="search"
+                [value]="searchQuery()"
+                [placeholder]="searchPlaceholder()"
+                [attr.aria-label]="searchPlaceholder()"
+                (input)="onSearchInput($event)"
+              />
+            }
+
+            @if (filteredOptions().length === 0) {
+              <div class="dd-multiple-choice-select__empty">
+                No options found.
+              </div>
+            } @else {
+              @for (option of filteredOptions(); track option.id) {
+                <label class="dd-multiple-choice-select__option">
+                  <input
+                    type="checkbox"
+                    class="dd-multiple-choice-select__checkbox"
+                    [checked]="isSelected(option.id)"
+                    [disabled]="disabled()"
+                    (change)="toggleOption(option.id)"
+                  />
+                  <span class="dd-multiple-choice-select__option-label">
+                    {{ option.label }}
+                  </span>
+                </label>
+              }
             }
           </div>
         }
@@ -91,15 +111,18 @@ export interface MultipleChoiceOption {
   `,
 })
 export class DdMultipleChoiceSelectComponent {
-  private readonly dynamicStyle: DdDynamicStyleService;
-  private readonly hostElement: ElementRef<HTMLElement>;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
+  private readonly hostElement = inject(ElementRef<HTMLElement>);
   private readonly internalSelected = signal<string[]>([]);
-  readonly isOpen = signal(false);
+  private readonly internalSearchQuery = signal("");
 
+  readonly isOpen = signal(false);
   readonly options = input<MultipleChoiceOption[]>([]);
   readonly value = input<string[]>([]);
   readonly label = input<string>("");
   readonly ariaLabel = input<string>("Select multiple options");
+  readonly searchable = input(false, { transform: booleanAttribute });
+  readonly searchPlaceholder = input<string>("Search options");
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly customClass = input<string>("");
   readonly customStyle = input<string | Record<string, string | number> | null>(
@@ -110,8 +133,23 @@ export class DdMultipleChoiceSelectComponent {
   readonly clicked = output<string>();
 
   readonly selectedOptions = computed(() =>
-    this.options().filter((opt) => this.internalSelected().includes(opt.id)),
+    this.options().filter((option) =>
+      this.internalSelected().includes(option.id),
+    ),
   );
+
+  readonly searchQuery = computed(() => this.internalSearchQuery());
+
+  readonly filteredOptions = computed(() => {
+    const query = this.searchQuery().trim().toLowerCase();
+    if (!this.searchable() || !query) {
+      return this.options();
+    }
+
+    return this.options().filter((option) =>
+      option.label.toLowerCase().includes(query),
+    );
+  });
 
   readonly wrapperClass = computed(() =>
     ["dd-multiple-choice-select", ...this.normalizedCustomClass()].join(" "),
@@ -122,38 +160,20 @@ export class DdMultipleChoiceSelectComponent {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
-    this.hostElement = inject(ElementRef<HTMLElement>);
     this.dynamicStyle.loadStyle(
       "multiple-choice-select",
       DD_MULTIPLE_CHOICE_SELECT_CSS,
     );
-    // Initialize selected state from value input
-    this.internalSelected.set(this.value());
+
+    effect(() => {
+      this.internalSelected.set(this.value());
+    });
   }
 
-  private normalizedCustomClass(): string[] {
-    return this.customClass()
-      .split(" ")
-      .filter((cls) => cls.trim().length > 0);
-  }
-
-  private normalizeStyleValue(
-    value: string | Record<string, string | number> | null,
-  ): string | null {
-    if (!value) return null;
-    if (typeof value === "string") return value;
-    return Object.entries(value)
-      .map(([key, val]) => `${key}: ${val}`)
-      .join("; ");
-  }
-
-  /** Checks if an option is currently selected. */
   isSelected(optionId: string): boolean {
     return this.internalSelected().includes(optionId);
   }
 
-  /** Toggles the selection state of an option. */
   toggleOption(optionId: string): void {
     if (this.disabled()) {
       return;
@@ -163,12 +183,12 @@ export class DdMultipleChoiceSelectComponent {
     const updated = current.includes(optionId)
       ? current.filter((id) => id !== optionId)
       : [...current, optionId];
+
     this.internalSelected.set(updated);
     this.changed.emit(updated);
     this.clicked.emit(optionId);
   }
 
-  /** Toggles the options dropdown visibility. */
   toggleDropdown(event?: Event): void {
     if (this.disabled()) {
       return;
@@ -176,9 +196,11 @@ export class DdMultipleChoiceSelectComponent {
 
     event?.preventDefault();
     this.isOpen.update((open) => !open);
+    if (!this.isOpen()) {
+      this.internalSearchQuery.set("");
+    }
   }
 
-  /** Removes a selected option. */
   removeOption(optionId: string, event?: Event): void {
     event?.stopPropagation();
 
@@ -191,7 +213,11 @@ export class DdMultipleChoiceSelectComponent {
     this.changed.emit(updated);
   }
 
-  @HostListener("document:click", ["$event"])
+  onSearchInput(event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    this.internalSearchQuery.set(target?.value ?? "");
+  }
+
   onDocumentClick(event: MouseEvent): void {
     if (!this.isOpen()) {
       return;
@@ -200,6 +226,29 @@ export class DdMultipleChoiceSelectComponent {
     const target = event.target as Node | null;
     if (target && !this.hostElement.nativeElement.contains(target)) {
       this.isOpen.set(false);
+      this.internalSearchQuery.set("");
     }
+  }
+
+  private normalizedCustomClass(): string[] {
+    return this.customClass()
+      .split(" ")
+      .filter((className) => className.trim().length > 0);
+  }
+
+  private normalizeStyleValue(
+    value: string | Record<string, string | number> | null,
+  ): string | null {
+    if (!value) {
+      return null;
+    }
+
+    if (typeof value === "string") {
+      return value;
+    }
+
+    return Object.entries(value)
+      .map(([key, currentValue]) => `${key}: ${currentValue}`)
+      .join("; ");
   }
 }

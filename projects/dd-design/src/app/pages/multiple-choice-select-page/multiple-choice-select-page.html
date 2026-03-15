@@ -1,0 +1,55 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Multiple Choice Select</h2>
+        <p>Select multiple options with inline chips.</p>
+
+        <div class="stack">
+          <h3>Default (`searchable = false`)</h3>
+          <dd-multiple-choice-select
+            label="Topics"
+            [options]="options"
+            [value]="selected"
+            (changed)="onSelectionChange($event)"
+          ></dd-multiple-choice-select>
+
+          <h3>Searchable (`searchable = true`)</h3>
+          <dd-multiple-choice-select
+            label="Search topics"
+            [options]="options"
+            [value]="selected"
+            [searchable]="true"
+            searchPlaceholder="Search topics"
+            (changed)="onSelectionChange($event)"
+          ></dd-multiple-choice-select>
+
+          <h3>Disabled (`disabled`)</h3>
+          <dd-multiple-choice-select
+            label="Disabled"
+            [options]="options"
+            [value]="selected"
+            [searchable]="true"
+            disabled
+          ></dd-multiple-choice-select>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>
+            options: Array&lt;{{ '{' }} id, label {{ '}' }}&gt;, value: string[]
+          </li>
+          <li>label, ariaLabel, disabled, searchable, searchPlaceholder</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>changed: string[]</li>
+          <li>clicked: string</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

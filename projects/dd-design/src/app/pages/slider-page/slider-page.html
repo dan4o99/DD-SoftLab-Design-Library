@@ -1,0 +1,50 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Slider</h2>
+        <p>A range input with styled track and thumb.</p>
+
+        <h3>Volume</h3>
+        <dd-slider
+          [(value)]="volume"
+          [min]="0"
+          [max]="100"
+          [showLabels]="true"
+          ariaLabel="Volume"
+        />
+        <p>Value: {{ volume() }}</p>
+
+        <h3>Price range</h3>
+        <dd-slider
+          [(value)]="price"
+          [min]="0"
+          [max]="1000"
+          [step]="50"
+          [showLabels]="true"
+          ariaLabel="Price"
+        />
+        <p>Price: ${{ price() }}</p>
+
+        <h3>Disabled</h3>
+        <dd-slider [value]="40" [disabled]="true" />
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>value: number</code> — two-way bindable</li>
+          <li><code>min / max: number</code></li>
+          <li><code>step: number</code></li>
+          <li><code>showLabels: boolean</code></li>
+          <li><code>disabled: boolean</code></li>
+          <li><code>ariaLabel: string</code></li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li><code>valueChange: number</code></li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

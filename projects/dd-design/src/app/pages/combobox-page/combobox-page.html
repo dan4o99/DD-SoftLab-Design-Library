@@ -1,0 +1,34 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Combobox</h2>
+        <p>A filterable dropdown that lets users type to search options.</p>
+
+        <h3>Fruit selector</h3>
+        <dd-combobox
+          [options]="fruits"
+          [(value)]="selected"
+          placeholder="Search fruits…"
+        />
+        <p>Selected: {{ selected() || '(none)' }}</p>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>
+            <code>options: DdComboboxOption[]</code> — list of label/value pairs
+          </li>
+          <li><code>value: string</code> — two-way bound selected value</li>
+          <li><code>placeholder: string</code></li>
+          <li><code>disabled: boolean</code></li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li><code>valueChange: string</code></li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

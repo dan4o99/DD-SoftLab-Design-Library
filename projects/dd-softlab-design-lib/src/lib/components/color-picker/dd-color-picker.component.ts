@@ -3,14 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  forwardRef,
   inject,
   input,
   model,
   output,
-  signal,
 } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { FormValueControl } from "@angular/forms/signals";
 import { DdDynamicStyleService } from "../../theming/dynamic-style.service";
 import { DD_COLOR_PICKER_CSS } from "./dd-color-picker.style";
@@ -18,13 +15,6 @@ import { DD_COLOR_PICKER_CSS } from "./dd-color-picker.style";
 @Component({
   selector: "dd-color-picker",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DdColorPickerComponent),
-      multi: true,
-    },
-  ],
   template: `
     <div [class]="wrapperClass()" [attr.style]="wrapperStyle()">
       @if (label()) {
@@ -39,7 +29,7 @@ import { DD_COLOR_PICKER_CSS } from "./dd-color-picker.style";
           [value]="value()"
           [attr.id]="id()"
           [attr.name]="name()"
-          [disabled]="isDisabled()"
+          [disabled]="disabled()"
           [attr.aria-label]="ariaLabel()"
           (input)="onInput($event)"
           (click)="onClick($event)"
@@ -49,7 +39,7 @@ import { DD_COLOR_PICKER_CSS } from "./dd-color-picker.style";
           type="text"
           class="dd-color-picker__text-input"
           [value]="value()"
-          [disabled]="isDisabled()"
+          [disabled]="disabled()"
           [attr.placeholder]="placeholder()"
           [attr.aria-label]="ariaLabel() + ' hex value'"
           (input)="onTextInput($event)"
@@ -59,14 +49,8 @@ import { DD_COLOR_PICKER_CSS } from "./dd-color-picker.style";
     </div>
   `,
 })
-export class DdColorPickerComponent
-  implements ControlValueAccessor, FormValueControl<string>
-{
-  private readonly dynamicStyle: DdDynamicStyleService;
-  private readonly cvaDisabled = signal(false);
-
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+export class DdColorPickerComponent implements FormValueControl<string> {
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly id = input<string>("");
   readonly name = input<string>("");
@@ -84,8 +68,6 @@ export class DdColorPickerComponent
   readonly changed = output<string>();
   readonly clicked = output<MouseEvent>();
 
-  readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
-
   readonly wrapperClass = computed(() =>
     ["dd-color-picker", ...this.normalizedCustomClass()].join(" "),
   );
@@ -95,7 +77,6 @@ export class DdColorPickerComponent
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("color-picker", DD_COLOR_PICKER_CSS);
   }
 
@@ -115,29 +96,24 @@ export class DdColorPickerComponent
       .join("; ");
   }
 
-  /** Emits color value and the changed event when color input changes. */
   onInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     const nextValue = target.value;
     this.value.set(nextValue);
-    this.onChange(nextValue);
     this.changed.emit(nextValue);
   }
 
-  /** Emits color value and the changed event when text input changes. */
   onTextInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     const nextValue = target.value;
     if (/^#([0-9A-F]{3}){1,2}$/i.test(nextValue)) {
       this.value.set(nextValue);
-      this.onChange(nextValue);
       this.changed.emit(nextValue);
     }
   }
 
-  /** Emits the click event when color picker is clicked. */
   onClick(event: MouseEvent): void {
-    if (this.isDisabled()) {
+    if (this.disabled()) {
       return;
     }
     this.clicked.emit(event);
@@ -145,22 +121,5 @@ export class DdColorPickerComponent
 
   onBlur(): void {
     this.touched.set(true);
-    this.onTouched();
-  }
-
-  writeValue(value: string | null): void {
-    this.value.set(value ?? "#000000");
-  }
-
-  registerOnChange(fn: (value: string) => void): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.cvaDisabled.set(isDisabled);
   }
 }

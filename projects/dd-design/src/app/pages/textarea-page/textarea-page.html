@@ -1,0 +1,41 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Textarea</h2>
+        <p>Multi-line text inputs for longer content.</p>
+
+        <div class="stack">
+          <div class="field">
+            <label class="field-label">Default</label>
+            <dd-textarea placeholder="Write a note" ariaLabel="Textarea" [rows]="4"></dd-textarea>
+          </div>
+          <div class="field">
+            <label class="field-label">Disabled</label>
+            <dd-textarea
+              placeholder="Disabled"
+              ariaLabel="Disabled textarea"
+              [rows]="3"
+              disabled
+            ></dd-textarea>
+          </div>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>value, placeholder, name, id, ariaLabel</li>
+          <li>rows</li>
+          <li>required, readonly, disabled</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>valueChange: string</li>
+          <li>clicked: MouseEvent</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

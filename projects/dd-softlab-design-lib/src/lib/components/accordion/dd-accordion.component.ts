@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   input,
   output,
@@ -33,14 +34,17 @@ import { DD_ACCORDION_CSS } from "./dd-accordion.style";
       <div
         class="dd-accordion__content"
         [class.dd-accordion__content--open]="isOpen()"
+        [attr.aria-hidden]="!isOpen()"
       >
-        <ng-content select="[accordion-content]" />
+        <div class="dd-accordion__content-inner">
+          <ng-content select="[accordion-content]" />
+        </div>
       </div>
     </section>
   `,
 })
 export class DdAccordionComponent {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
   private readonly internalOpen = signal(false);
 
   readonly open = input(false, { transform: booleanAttribute });
@@ -64,9 +68,11 @@ export class DdAccordionComponent {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("accordion", DD_ACCORDION_CSS);
-    this.internalOpen.set(this.open());
+
+    effect(() => {
+      this.internalOpen.set(this.open());
+    });
   }
 
   onHeaderClick(event: MouseEvent): void {

@@ -1,0 +1,37 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Tooltip</h2>
+        <p>Contextual information shown on hover or focus.</p>
+
+        <div class="row" style="gap: 2rem; padding: 2rem 0">
+          <dd-tooltip text="Tooltip on top" position="top">
+            <dd-button variant="secondary">Top</dd-button>
+          </dd-tooltip>
+
+          <dd-tooltip text="Tooltip on bottom" position="bottom">
+            <dd-button variant="secondary">Bottom</dd-button>
+          </dd-tooltip>
+
+          <dd-tooltip text="Tooltip on left" position="left">
+            <dd-button variant="secondary">Left</dd-button>
+          </dd-tooltip>
+
+          <dd-tooltip text="Tooltip on right" position="right">
+            <dd-button variant="secondary">Right</dd-button>
+          </dd-tooltip>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>text: string (required) — tooltip text</li>
+          <li>position: top | bottom | left | right</li>
+          <li>customClass</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

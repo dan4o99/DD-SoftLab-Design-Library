@@ -1,0 +1,33 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Skeleton</h2>
+        <p>Placeholder loading states for content that hasn't yet loaded.</p>
+
+        <h3>Rectangle (`variant = rectangle`)</h3>
+        <dd-skeleton width="100%" height="6rem" />
+
+        <h3>Text lines (`variant = text`)</h3>
+        <div class="stack" style="gap: 0.5rem">
+          <dd-skeleton variant="text" width="100%" />
+          <dd-skeleton variant="text" width="80%" />
+          <dd-skeleton variant="text" width="60%" />
+        </div>
+
+        <h3>Circle (`variant = circle`)</h3>
+        <dd-skeleton variant="circle" width="3rem" height="3rem" />
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>variant: rectangle | circle | text</li>
+          <li>width: string (CSS value)</li>
+          <li>height: string (CSS value)</li>
+          <li>customClass</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

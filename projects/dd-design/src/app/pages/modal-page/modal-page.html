@@ -1,0 +1,82 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Modal</h2>
+        <p>
+          An overlay dialog that requires user interaction before returning to
+          the main content.
+        </p>
+
+        <h3>Default (`open`)</h3>
+        <dd-button (clicked)="openModal()">Open default modal</dd-button>
+
+        <dd-modal [open]="modalOpen()" (closed)="closeModal()">
+          <span modal-title>Confirm Action</span>
+          <p>Are you sure you want to proceed? This action cannot be undone.</p>
+          <div modal-footer>
+            <dd-button variant="secondary" (clicked)="closeModal()"
+              >Cancel</dd-button
+            >
+            <dd-button (clicked)="closeModal()">Confirm</dd-button>
+          </div>
+        </dd-modal>
+
+        <h3>No close icon (`hideClose`)</h3>
+        <dd-button variant="secondary" (clicked)="openHideCloseModal()">
+          Open hide-close modal
+        </dd-button>
+
+        <dd-modal [open]="hideCloseModalOpen()" [hideClose]="true" (closed)="closeHideCloseModal()">
+          <span modal-title>Sign out</span>
+          <p>Use footer actions to close this modal when the close icon is hidden.</p>
+          <div modal-footer>
+            <dd-button variant="secondary" (clicked)="closeHideCloseModal()">
+              Stay signed in
+            </dd-button>
+            <dd-button (clicked)="closeHideCloseModal()">Sign out</dd-button>
+          </div>
+        </dd-modal>
+
+        <h3>Static backdrop (`closeOnBackdrop = false`)</h3>
+        <dd-button variant="secondary" (clicked)="openStaticBackdropModal()">
+          Open static-backdrop modal
+        </dd-button>
+
+        <dd-modal
+          [open]="staticBackdropModalOpen()"
+          [closeOnBackdrop]="false"
+          (closed)="closeStaticBackdropModal()"
+        >
+          <span modal-title>Required confirmation</span>
+          <p>
+            Clicking outside does not close this modal. Use the button below.
+          </p>
+          <div modal-footer>
+            <dd-button (clicked)="closeStaticBackdropModal()">Close</dd-button>
+          </div>
+        </dd-modal>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>open: boolean</li>
+          <li>hideClose: boolean</li>
+          <li>closeOnBackdrop: boolean</li>
+          <li>ariaLabel, customClass</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>closed: void</li>
+        </ul>
+        <h3>Content projection</h3>
+        <ul>
+          <li>[modal-title] — header text</li>
+          <li>[modal-footer] — action buttons</li>
+          <li>Default — body content</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

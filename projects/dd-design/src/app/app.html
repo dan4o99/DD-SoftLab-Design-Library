@@ -1,0 +1,118 @@
+<main class="app-shell">
+  <header class="app-header">
+    <div>
+      <h1>DD Design Library</h1>
+      <p>Token-driven Angular theming with runtime theme switching.</p>
+    </div>
+    <div class="header-switcher">
+      <div class="header-field">
+        <label class="header-label" for="theme-select">Theme</label>
+        <dd-dropdown
+          id="theme-select"
+          ariaLabel="Theme selector"
+          [value]="activeTheme().theme.name"
+          (valueChange)="onThemeChange($event)"
+        >
+          @for (theme of themes; track theme.name) {
+          <option [value]="theme.name">{{ theme.label }}</option>
+          }
+        </dd-dropdown>
+      </div>
+
+      <div class="header-field">
+        <label class="header-label" for="scheme-select">Color scheme</label>
+        <dd-switch
+          id="scheme-select"
+          ariaLabel="Color scheme toggle"
+          [checked]="activeTheme().scheme === 'dark'"
+          (toggled)="onSchemeToggle($event)"
+        >
+          Dark mode
+        </dd-switch>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <dd-sidebar
+      customClass="app-sidebar"
+      [width]="sidebarWidth()"
+      [maxWidth]="560"
+      [minWidth]="260"
+      [collapsable]="true"
+      (widthChange)="onSidebarWidthChange($event)"
+    >
+      <div sidebar-header>
+        <h2>Components</h2>
+        <p class="sidebar-subtitle">Browse the library showcase</p>
+      </div>
+
+      <dd-menu>
+        <dd-menu-item [routerLink]="'/accordion'">Accordion</dd-menu-item>
+        <dd-menu-item [routerLink]="'/alert'">Alert</dd-menu-item>
+        <dd-menu-item [routerLink]="'/avatar'">Avatar</dd-menu-item>
+        <dd-menu-item [routerLink]="'/badge'">Badge</dd-menu-item>
+        <dd-menu-item [routerLink]="'/breadcrumbs'">Breadcrumbs</dd-menu-item>
+        <dd-menu-item [routerLink]="'/button'">Button</dd-menu-item>
+        <dd-menu-item [routerLink]="'/button-group'">Button Group</dd-menu-item>
+        <dd-menu-item [routerLink]="'/card'">Card</dd-menu-item>
+        <dd-menu-item [routerLink]="'/carousel'">Carousel</dd-menu-item>
+        <dd-menu-item [routerLink]="'/checkbox'">Checkbox</dd-menu-item>
+        <dd-menu-item [routerLink]="'/chip'">Chip</dd-menu-item>
+        <dd-menu-item [routerLink]="'/color-picker'">Color Picker</dd-menu-item>
+        <dd-menu-item [routerLink]="'/combobox'">Combobox</dd-menu-item>
+        <dd-menu-item [routerLink]="'/context-menu'">Context Menu</dd-menu-item>
+        <dd-menu-item [routerLink]="'/date-picker'">Date Picker</dd-menu-item>
+        <dd-menu-item [routerLink]="'/drawer'">Drawer</dd-menu-item>
+        <dd-menu-item [routerLink]="'/dropdown'">Dropdown</dd-menu-item>
+        <dd-menu-item [routerLink]="'/empty-state'">Empty State</dd-menu-item>
+        <dd-menu-item [routerLink]="'/fieldset'">Fieldset</dd-menu-item>
+        <dd-menu-item [routerLink]="'/heading'">Heading</dd-menu-item>
+        <dd-menu-item [routerLink]="'/icon'">Icon</dd-menu-item>
+        <dd-menu-item [routerLink]="'/input'">Input</dd-menu-item>
+        <dd-menu-item [routerLink]="'/label'">Label</dd-menu-item>
+        <dd-menu-item [routerLink]="'/link'">Link</dd-menu-item>
+        <dd-menu-item [routerLink]="'/list'">List</dd-menu-item>
+        <dd-menu-item [routerLink]="'/menu'">Menu</dd-menu-item>
+        <dd-menu-item [routerLink]="'/modal'">Modal</dd-menu-item>
+        <dd-menu-item [routerLink]="'/multiple-choice-select'"
+          >Multiple Choice Select</dd-menu-item
+        >
+        <dd-menu-item [routerLink]="'/pagination'">Pagination</dd-menu-item>
+        <dd-menu-item [routerLink]="'/popover'">Popover</dd-menu-item>
+        <dd-menu-item [routerLink]="'/progress-bar'">Progress Bar</dd-menu-item>
+        <dd-menu-item [routerLink]="'/progress-indicator'"
+          >Progress Indicator</dd-menu-item
+        >
+        <dd-menu-item [routerLink]="'/quote'">Quote</dd-menu-item>
+        <dd-menu-item [routerLink]="'/radio'">Radio</dd-menu-item>
+        <dd-menu-item [routerLink]="'/rating'">Rating</dd-menu-item>
+        <dd-menu-item [routerLink]="'/search-input'">Search Input</dd-menu-item>
+        <dd-menu-item [routerLink]="'/segmented-control'"
+          >Segmented Control</dd-menu-item
+        >
+        <dd-menu-item [routerLink]="'/separator'">Separator</dd-menu-item>
+        <dd-menu-item [routerLink]="'/sidebar'">Sidebar</dd-menu-item>
+        <dd-menu-item [routerLink]="'/skeleton'">Skeleton</dd-menu-item>
+        <dd-menu-item [routerLink]="'/skip-link'">Skip Link</dd-menu-item>
+        <dd-menu-item [routerLink]="'/slider'">Slider</dd-menu-item>
+        <dd-menu-item [routerLink]="'/spinner'">Spinner</dd-menu-item>
+        <dd-menu-item [routerLink]="'/stepper'">Stepper</dd-menu-item>
+        <dd-menu-item [routerLink]="'/switch'">Switch</dd-menu-item>
+        <dd-menu-item [routerLink]="'/table'">Table</dd-menu-item>
+        <dd-menu-item [routerLink]="'/tabs'">Tabs</dd-menu-item>
+        <dd-menu-item [routerLink]="'/textarea'">Textarea</dd-menu-item>
+        <dd-menu-item [routerLink]="'/toast'">Toast</dd-menu-item>
+        <dd-menu-item [routerLink]="'/tooltip'">Tooltip</dd-menu-item>
+        <dd-menu-item [routerLink]="'/tree-view'">Tree View</dd-menu-item>
+        <dd-menu-item [routerLink]="'/visually-hidden'"
+          >Visually Hidden</dd-menu-item
+        >
+      </dd-menu>
+    </dd-sidebar>
+
+    <section class="app-content">
+      <router-outlet />
+    </section>
+  </div>
+</main>

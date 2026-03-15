@@ -3,14 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  forwardRef,
   inject,
   input,
   model,
   output,
-  signal,
 } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { FormValueControl } from "@angular/forms/signals";
 import { DdDynamicStyleService } from "../../theming/dynamic-style.service";
 import { DD_DATE_PICKER_CSS } from "./dd-date-picker.style";
@@ -18,13 +15,6 @@ import { DD_DATE_PICKER_CSS } from "./dd-date-picker.style";
 @Component({
   selector: "dd-date-picker",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DdDatePickerComponent),
-      multi: true,
-    },
-  ],
   template: `
     <div [class]="wrapperClass()" [attr.style]="wrapperStyle()">
       @if (label()) {
@@ -40,7 +30,7 @@ import { DD_DATE_PICKER_CSS } from "./dd-date-picker.style";
         [attr.name]="name()"
         [attr.min]="minDate()"
         [attr.max]="maxDate()"
-        [disabled]="isDisabled()"
+        [disabled]="disabled()"
         [attr.placeholder]="placeholder()"
         [attr.aria-label]="ariaLabel()"
         (input)="onInput($event)"
@@ -50,14 +40,8 @@ import { DD_DATE_PICKER_CSS } from "./dd-date-picker.style";
     </div>
   `,
 })
-export class DdDatePickerComponent
-  implements ControlValueAccessor, FormValueControl<string>
-{
-  private readonly dynamicStyle: DdDynamicStyleService;
-  private readonly cvaDisabled = signal(false);
-
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+export class DdDatePickerComponent implements FormValueControl<string> {
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly id = input<string>("");
   readonly name = input<string>("");
@@ -77,8 +61,6 @@ export class DdDatePickerComponent
   readonly changed = output<string>();
   readonly clicked = output<MouseEvent>();
 
-  readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
-
   readonly wrapperClass = computed(() =>
     ["dd-date-picker", ...this.normalizedCustomClass()].join(" "),
   );
@@ -88,7 +70,6 @@ export class DdDatePickerComponent
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("date-picker", DD_DATE_PICKER_CSS);
   }
 
@@ -108,18 +89,15 @@ export class DdDatePickerComponent
       .join("; ");
   }
 
-  /** Emits the selected date value and the changed event. */
   onInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     const nextValue = target.value;
     this.value.set(nextValue);
-    this.onChange(nextValue);
     this.changed.emit(nextValue);
   }
 
-  /** Emits the click event when date picker is clicked. */
   onClick(event: MouseEvent): void {
-    if (this.isDisabled()) {
+    if (this.disabled()) {
       return;
     }
     this.clicked.emit(event);
@@ -127,22 +105,5 @@ export class DdDatePickerComponent
 
   onBlur(): void {
     this.touched.set(true);
-    this.onTouched();
-  }
-
-  writeValue(value: string | null): void {
-    this.value.set(value ?? "");
-  }
-
-  registerOnChange(fn: (value: string) => void): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.cvaDisabled.set(isDisabled);
   }
 }

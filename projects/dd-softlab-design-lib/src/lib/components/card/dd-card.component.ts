@@ -18,7 +18,7 @@ import { DD_CARD_CSS } from "./dd-card.style";
   `,
 })
 export class DdCardComponent {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly customClass = input<string>("");
   readonly customStyle = input<string | Record<string, string | number> | null>(
@@ -33,7 +33,6 @@ export class DdCardComponent {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("card", DD_CARD_CSS);
   }
 

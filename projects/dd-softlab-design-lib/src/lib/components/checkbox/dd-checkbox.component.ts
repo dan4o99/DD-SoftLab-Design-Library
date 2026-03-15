@@ -31,7 +31,7 @@ import { DD_CHECKBOX_CSS } from "./dd-checkbox.style";
   `,
 })
 export class DdCheckboxComponent implements FormCheckboxControl {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly checked = model<boolean>(false);
   readonly disabled = input(false, { transform: booleanAttribute });
@@ -55,7 +55,6 @@ export class DdCheckboxComponent implements FormCheckboxControl {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("checkbox", DD_CHECKBOX_CSS);
   }
 

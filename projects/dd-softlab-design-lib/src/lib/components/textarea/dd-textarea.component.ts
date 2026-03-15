@@ -3,14 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  forwardRef,
   inject,
   input,
   model,
   output,
-  signal,
 } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { FormValueControl } from "@angular/forms/signals";
 import { DdDynamicStyleService } from "../../theming/dynamic-style.service";
 import { DD_TEXTAREA_CSS } from "./dd-textarea.style";
@@ -18,13 +15,6 @@ import { DD_TEXTAREA_CSS } from "./dd-textarea.style";
 @Component({
   selector: "dd-textarea",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DdTextareaComponent),
-      multi: true,
-    },
-  ],
   template: `
     <textarea
       [class]="textareaClass()"
@@ -36,7 +26,7 @@ import { DD_TEXTAREA_CSS } from "./dd-textarea.style";
       [attr.rows]="rows()"
       [required]="required()"
       [readonly]="readonly()"
-      [disabled]="isDisabled()"
+      [disabled]="disabled()"
       [attr.aria-label]="ariaLabel()"
       (input)="onInput($event)"
       (click)="onClick($event)"
@@ -44,14 +34,8 @@ import { DD_TEXTAREA_CSS } from "./dd-textarea.style";
     ></textarea>
   `,
 })
-export class DdTextareaComponent
-  implements ControlValueAccessor, FormValueControl<string>
-{
-  private readonly dynamicStyle: DdDynamicStyleService;
-  private readonly cvaDisabled = signal(false);
-
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+export class DdTextareaComponent implements FormValueControl<string> {
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly value = model<string>("");
   readonly touched = model(false);
@@ -59,7 +43,7 @@ export class DdTextareaComponent
   readonly name = input<string>("");
   readonly id = input<string>("");
   readonly ariaLabel = input<string>("");
-  rows = input<number>(4);
+  readonly rows = input<number>(4);
   readonly required = input(false, { transform: booleanAttribute });
   readonly readonly = input(false, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });
@@ -69,7 +53,6 @@ export class DdTextareaComponent
   );
 
   readonly clicked = output<MouseEvent>();
-  readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
 
   readonly textareaClass = computed(() =>
     ["dd-textarea", ...this.normalizedCustomClass()].join(" "),
@@ -80,19 +63,16 @@ export class DdTextareaComponent
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("textarea", DD_TEXTAREA_CSS);
   }
 
   onInput(event: Event): void {
     const target = event.target as HTMLTextAreaElement | null;
-    const nextValue = target?.value ?? "";
-    this.value.set(nextValue);
-    this.onChange(nextValue);
+    this.value.set(target?.value ?? "");
   }
 
   onClick(event: MouseEvent): void {
-    if (this.isDisabled()) {
+    if (this.disabled()) {
       return;
     }
 
@@ -101,23 +81,6 @@ export class DdTextareaComponent
 
   onBlur(): void {
     this.touched.set(true);
-    this.onTouched();
-  }
-
-  writeValue(value: string | null): void {
-    this.value.set(value ?? "");
-  }
-
-  registerOnChange(fn: (value: string) => void): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.cvaDisabled.set(isDisabled);
   }
 
   private normalizedCustomClass(): string[] {

@@ -1,0 +1,50 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Avatar</h2>
+        <p>
+          A graphical representation of a user — photo, initials, or
+          placeholder.
+        </p>
+
+        <h3>Sizes</h3>
+        <div class="row">
+          <dd-avatar name="Alice Smith" size="small" />
+          <dd-avatar name="Bob Jones" size="medium" />
+          <dd-avatar name="Carol King" size="large" />
+        </div>
+
+        <h3>Shapes</h3>
+        <div class="row">
+          <dd-avatar name="Dan Wilson" shape="circle" />
+          <dd-avatar name="Eve Adams" shape="square" />
+        </div>
+
+        <h3>With image</h3>
+        <div class="row">
+          <dd-avatar
+            src="https://i.pravatar.cc/80?u=1"
+            ariaLabel="User photo"
+          />
+          <dd-avatar
+            src="https://i.pravatar.cc/80?u=2"
+            ariaLabel="User photo"
+            shape="square"
+          />
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>src: string | null — image URL</li>
+          <li>name: string — used to derive initials</li>
+          <li>size: small | medium | large</li>
+          <li>shape: circle | square</li>
+          <li>ariaLabel, customClass</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

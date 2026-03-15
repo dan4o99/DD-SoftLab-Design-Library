@@ -1,0 +1,30 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Date Picker</h2>
+        <p>Choose dates with optional min/max limits.</p>
+
+        <div class="stack">
+          <dd-date-picker label="Start date" value="2026-02-18"></dd-date-picker>
+          <dd-date-picker label="End date" min="2026-02-18" max="2026-12-31"></dd-date-picker>
+          <dd-date-picker label="Disabled" disabled></dd-date-picker>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>id, name, label, value, min, max, placeholder</li>
+          <li>ariaLabel, disabled</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>changed: string</li>
+          <li>clicked: MouseEvent</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

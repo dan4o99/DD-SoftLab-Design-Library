@@ -1,0 +1,51 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Drawer</h2>
+        <p>A slide-in panel that can appear from any edge.</p>
+
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap">
+          <dd-button (click)="openDrawer('right')">Open Right</dd-button>
+          <dd-button variant="secondary" (click)="openDrawer('left')"
+            >Open Left</dd-button
+          >
+          <dd-button variant="secondary" (click)="openDrawer('bottom')"
+            >Open Bottom</dd-button
+          >
+        </div>
+
+        <dd-drawer
+          [open]="open()"
+          [placement]="placement()"
+          (closed)="open.set(false)"
+        >
+          <span drawer-title>Drawer Panel</span>
+          <p>
+            This is the drawer content. It slides in from the {{ placement() }}.
+          </p>
+          <dd-button variant="secondary" (click)="open.set(false)"
+            >Close</dd-button
+          >
+        </dd-drawer>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>open: boolean</code></li>
+          <li><code>placement: 'left' | 'right' | 'top' | 'bottom'</code></li>
+          <li><code>width / height: string</code></li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li><code>closed: void</code></li>
+        </ul>
+        <h3>Slots</h3>
+        <ul>
+          <li><code>[drawer-title]</code> — header title content</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

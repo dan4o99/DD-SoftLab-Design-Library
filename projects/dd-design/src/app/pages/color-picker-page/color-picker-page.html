@@ -1,0 +1,30 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Color Picker</h2>
+        <p>Pick a color and edit the hex value.</p>
+
+        <div class="stack">
+          <dd-color-picker label="Primary color" value="#2563eb"></dd-color-picker>
+          <dd-color-picker label="Accent color" value="#f97316"></dd-color-picker>
+          <dd-color-picker label="Disabled" value="#94a3b8" disabled></dd-color-picker>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>id, name, label, value, placeholder</li>
+          <li>ariaLabel, disabled</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>changed: string</li>
+          <li>clicked: MouseEvent</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

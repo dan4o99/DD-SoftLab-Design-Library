@@ -37,6 +37,22 @@ export const DD_MULTIPLE_CHOICE_SELECT_CSS = `
   position: relative;
 }
 
+.dd-multiple-choice-select__search {
+  width: 100%;
+  border: 1px solid ${toCssVar("color.border")};
+  border-radius: ${toCssVar("radius.sm")};
+  padding: ${toCssVar("space.xs")} ${toCssVar("space.sm")};
+  background: ${toCssVar("color.surface")};
+  color: ${toCssVar("color.text")};
+  font: inherit;
+}
+
+.dd-multiple-choice-select__search:focus-visible {
+  border-color: ${toCssVar("color.primary")};
+  box-shadow: 0 0 0 3px color-mix(in srgb, ${toCssVar("color.primary")} 20%, transparent);
+  outline: none;
+}
+
 .dd-multiple-choice-select__option {
   display: flex;
   align-items: center;
@@ -125,5 +141,11 @@ export const DD_MULTIPLE_CHOICE_SELECT_CSS = `
 
 .dd-multiple-choice-select__chevron--open {
   transform: rotate(180deg);
+}
+
+.dd-multiple-choice-select__empty {
+  padding: ${toCssVar("space.sm")};
+  color: ${toCssVar("color.textSecondary")};
+  font-size: 0.875rem;
 }
 `;

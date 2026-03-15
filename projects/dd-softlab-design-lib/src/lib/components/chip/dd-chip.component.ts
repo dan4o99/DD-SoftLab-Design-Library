@@ -14,32 +14,64 @@ import { DD_CHIP_CSS } from "./dd-chip.style";
   selector: "dd-chip",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <button
-      [class]="chipClass()"
-      [attr.style]="chipStyle()"
-      type="button"
-      [disabled]="disabled()"
-      [attr.aria-label]="ariaLabel()"
-      (click)="onClick($event)"
-    >
-      <ng-content />
-    </button>
+    @if (removable()) {
+      <span [class]="chipClass()" [attr.style]="chipStyle()">
+        <button
+          class="dd-chip__action"
+          type="button"
+          [disabled]="disabled()"
+          [attr.aria-label]="ariaLabel()"
+          (click)="onClick($event)"
+        >
+          <ng-content />
+        </button>
+        <button
+          class="dd-chip__remove"
+          type="button"
+          [disabled]="disabled()"
+          [attr.aria-label]="removeAriaLabel()"
+          (click)="onRemove($event)"
+        >
+          ×
+        </button>
+      </span>
+    } @else {
+      <button
+        [class]="chipClass()"
+        [attr.style]="chipStyle()"
+        type="button"
+        [disabled]="disabled()"
+        [attr.aria-label]="ariaLabel()"
+        (click)="onClick($event)"
+      >
+        <ng-content />
+      </button>
+    }
   `,
 })
 export class DdChipComponent {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly disabled = input(false, { transform: booleanAttribute });
+  readonly removable = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input<string>("Chip");
+  readonly removeAriaLabel = input<string>("Remove chip");
   readonly customClass = input<string>("");
   readonly customStyle = input<string | Record<string, string | number> | null>(
     null,
   );
 
   readonly clicked = output<MouseEvent>();
+  readonly removed = output<void>();
 
   readonly chipClass = computed(() =>
-    ["dd-chip", ...this.normalizedCustomClass()].join(" "),
+    [
+      "dd-chip",
+      this.removable() ? "dd-chip--removable" : "",
+      ...this.normalizedCustomClass(),
+    ]
+      .filter(Boolean)
+      .join(" "),
   );
 
   readonly chipStyle = computed(() =>
@@ -47,7 +79,6 @@ export class DdChipComponent {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("chip", DD_CHIP_CSS);
   }
 
@@ -57,6 +88,16 @@ export class DdChipComponent {
     }
 
     this.clicked.emit(event);
+  }
+
+  onRemove(event: MouseEvent): void {
+    event.stopPropagation();
+
+    if (this.disabled()) {
+      return;
+    }
+
+    this.removed.emit();
   }
 
   private normalizedCustomClass(): string[] {

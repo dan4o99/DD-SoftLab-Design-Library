@@ -22,7 +22,7 @@ import { DD_ALERT_CSS, DdAlertVariant } from "./dd-alert.style";
   `,
 })
 export class DdAlertComponent {
-  private readonly dynamicStyle: DdDynamicStyleService;
+  private readonly dynamicStyle = inject(DdDynamicStyleService);
 
   readonly variant = input<DdAlertVariant>("info");
   readonly role = input<"status" | "alert">("status");
@@ -51,7 +51,6 @@ export class DdAlertComponent {
   );
 
   constructor() {
-    this.dynamicStyle = inject(DdDynamicStyleService);
     this.dynamicStyle.loadStyle("alert", DD_ALERT_CSS);
   }
 

@@ -1,0 +1,32 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Stepper</h2>
+        <p>A numeric input with increment and decrement buttons.</p>
+
+        <h3>Counter (1–10)</h3>
+        <dd-stepper [(value)]="count" [min]="1" [max]="10" />
+        <p>Value: {{ count() }}</p>
+
+        <h3>Quantity (0–99, step 5)</h3>
+        <dd-stepper [(value)]="quantity" [min]="0" [max]="99" [step]="5" />
+        <p>Quantity: {{ quantity() }}</p>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li><code>value: number</code> — two-way bindable</li>
+          <li><code>min / max: number</code></li>
+          <li><code>step: number</code></li>
+          <li><code>ariaLabel: string</code></li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li><code>valueChange: number</code></li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>

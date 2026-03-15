@@ -1,0 +1,55 @@
+<section class="page">
+  <dd-card>
+    <dd-tabs>
+      <dd-tab id="showcase" label="Showcase">
+        <h2>Accordion</h2>
+        <p>Expandable sections for grouped content.</p>
+
+        <h3>Default (closed)</h3>
+        <div class="stack">
+          <dd-accordion>
+            <span accordion-header>What is DD Design?</span>
+            <div accordion-content>
+              A lightweight, token-driven component library for fast UI
+              iteration.
+            </div>
+          </dd-accordion>
+        </div>
+
+        <h3>Open by default (`open`)</h3>
+        <div class="stack">
+          <dd-accordion open>
+            <span accordion-header>Can I theme components?</span>
+            <div accordion-content>
+              Yes, switch between themes and color schemes from the header
+              controls.
+            </div>
+          </dd-accordion>
+        </div>
+
+        <h3>Disabled (`disabled`)</h3>
+        <div class="stack">
+          <dd-accordion disabled>
+            <span accordion-header>Disabled accordion item</span>
+            <div accordion-content>
+              This content is not expandable while disabled.
+            </div>
+          </dd-accordion>
+        </div>
+      </dd-tab>
+
+      <dd-tab id="api" label="API">
+        <h3>Inputs</h3>
+        <ul>
+          <li>open, disabled</li>
+          <li>customClass, customStyle</li>
+        </ul>
+        <h3>Outputs</h3>
+        <ul>
+          <li>openChange: boolean</li>
+          <li>clicked: MouseEvent</li>
+        </ul>
+      </dd-tab>
+    </dd-tabs>
+  </dd-card>
+</section>
